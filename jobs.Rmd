@@ -6,7 +6,7 @@ output: ''
 Load different packages that will use in this model:
 
 ```{r}
-pkg_list = c("ggplot2")
+pkg_list = c("ggplot2", "plyr", "stringr")
 mia_pkgs = pkg_list[!(pkg_list %in% installed.packages()[,"Package"])]
 if(length(mia_pkgs) > 0) install.packages(mia_pkgs)
 loaded_pkgs = lapply(pkg_list, require, character.only=TRUE)
@@ -14,19 +14,33 @@ loaded_pkgs = lapply(pkg_list, require, character.only=TRUE)
 
 Set up the data:
 ```{r}
-jdata = read.csv()
+jdata = read.csv("datarelatedjobs.csv")
 names(jdata)
+head(jdata)
+```
+
+Overiew about our dataset:
+
+```{r}
 summary(jdata)
+```
+
+```{r}
+count(jdata$Standing)
 ```
 
 Comparing between companies in the North and the South of California (using side-by-side histogram):
 
 - Number of companies in North vs South
+- Average minimum experience. 
 - Number of Bachelor's, Master's, Ph.D that companies recruiting in North vs South. (All levels = add 1 to every value)
 - Average salary in North vs South
 
 Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
 
+Plot a histogram comparing 
+ 
 Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
 
+Write a function to predict the salary base on City, Position, Standing and Minimum experience. Simulate it around 1000 times to make sure our function correct
 
