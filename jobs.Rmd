@@ -72,7 +72,7 @@ sum(n_companies_south)
 ```
 
 Average minimum experience:
-
+.
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
 
