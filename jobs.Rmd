@@ -29,12 +29,78 @@ summary(jdata)
 count(jdata$Standing)
 ```
 
-Comparing between companies in the North and the South of California (using side-by-side histogram):
+1. Comparing between companies in the North and the South of California (using side-by-side histogram):
 
 - Number of companies in North vs South
 - Average minimum experience. 
 - Number of Bachelor's, Master's, Ph.D that companies recruiting in North vs South. (All levels = add 1 to every value)
 - Average salary in North vs South
+
+Set up 2 subset for North and South:
+
+```{r}
+North_sub = jdata[which(jdata$Region == "North CA"),]
+South_sub = jdata[which(jdata$Region == "South CA"),]
+```
+
+Number of companies:
+
+```{r}
+count(North_sub$Company)$freq
+n_companies_north = rep(0, length(count(North_sub$Company)$freq))
+n_companies_south = rep(0, length(count(South_sub$Company)$freq))
+
+for(i in 1:length(count(North_sub$Company)$freq)){
+  if(count(North_sub$Company)$freq[i] == 1){
+    n_companies_north[i] = count(North_sub$Company)$freq[i] 
+  } else{
+    n_companies_north[i] = 1
+  }
+}
+
+for(i in 1:length(count(South_sub$Company)$freq)){
+  if(count(South_sub$Company)$freq[i] == 1){
+    n_companies_south[i] = count(South_sub$Company)$freq[i] 
+  } else{
+    n_companies_south[i] = 1
+  }
+}
+
+sum(n_companies_north)
+sum(n_companies_south)
+
+```
+
+Average minimum experience:
+
+```{r}
+#Use NA.omit to omit to take out NA values then use mean function to find average
+
+```
+
+Number of Bachelor's, Master's, Ph.D:
+
+```{r}
+#Nearly same as counting number of companies:
+#Create 3 vectors: n_bach, n_master, n_phd to store the values.
+#For this one we need to use stringr.
+#Ex: All levels -> n _bach = n_bach + 1, n_master = n_master + 1, n_phd = n_phd + 1
+#BS/MS ->  n_bach = n_bach + 1, n_master = n_master + 1 (Use  stringr so that we can get only BS or only MS)
+
+```
+
+Average salary:
+
+```{r}
+#Use NA.omit to omit to take out NA values then use mean function to find average
+
+```
+
+Create dataframe to plot out our histogram:
+
+```{r}
+
+```
 
 Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
 
