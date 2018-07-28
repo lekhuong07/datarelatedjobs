@@ -40,7 +40,10 @@ Set up 2 subset for North and South:
 
 ```{r}
 North_sub = jdata[which(jdata$Region == "North CA"),]
+head(North_sub,20)
 South_sub = jdata[which(jdata$Region == "South CA"),]
+head(South_sub,20)
+
 ```
 
 Number of companies:
@@ -68,14 +71,15 @@ for(i in 1:length(count(South_sub$Company)$freq)){
 
 sum(n_companies_north)
 sum(n_companies_south)
-
 ```
 
 Average minimum experience:
 
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
-
+count(jdata$Minimum_exp_years)
+mean(North_sub$Minimum_exp_years)
+mean(South_sub$Minimum_exp_years)
 ```
 
 Number of Bachelor's, Master's, Ph.D:
@@ -86,14 +90,18 @@ Number of Bachelor's, Master's, Ph.D:
 #For this one we need to use stringr.
 #Ex: All levels -> n _bach = n_bach + 1, n_master = n_master + 1, n_phd = n_phd + 1
 #BS/MS ->  n_bach = n_bach + 1, n_master = n_master + 1 (Use  stringr so that we can get only BS or only MS)
-
+count(jdata$Standing)
+Standing_sub = jdata[which(jdata$Standing != "NA"),]
+North_sub_st = Standing_sub[which(Standing_sub$Region == "North CA"),]
+South_sub_st = Standing_sub[which(Standing_sub$Region == "South CA"),]
+Standing_sub
 ```
 
 Average salary:
 
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
-
+count(jdata$Estimate_minimum_average_salary)
 ```
 
 Create dataframe to plot out our histogram:
