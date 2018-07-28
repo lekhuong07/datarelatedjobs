@@ -40,7 +40,10 @@ Set up 2 subset for North and South:
 
 ```{r}
 North_sub = jdata[which(jdata$Region == "North CA"),]
+head(North_sub,20)
 South_sub = jdata[which(jdata$Region == "South CA"),]
+head(South_sub,20)
+
 ```
 
 Number of companies:
@@ -68,7 +71,6 @@ for(i in 1:length(count(South_sub$Company)$freq)){
 
 sum(n_companies_north)
 sum(n_companies_south)
-
 ```
 
 Average minimum experience:
@@ -78,6 +80,7 @@ Set up two subset for North and South
 
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
+<<<<<<< HEAD
 Minimum_exp_years_omit_North = na.omit(North_sub$Minimum_exp_years)
 Minimum_exp_years_omit_Mean_North = mean(Minimum_exp_years_omit_North)
  
@@ -87,6 +90,11 @@ Minimum_exp_years_omit_South = na.omit(South_sub$Minimum_exp_years)
 Minimum_exp_years_omit_Mean_South = mean(Minimum_exp_years_omit_South)
 
 Minimum_exp_years_omit_Mean_South
+=======
+count(jdata$Minimum_exp_years)
+mean(North_sub$Minimum_exp_years)
+mean(South_sub$Minimum_exp_years)
+>>>>>>> 18d107593479e0315256513f519c2e1e62d764a4
 ```
 
 Number of Bachelor's, Master's, Ph.D:
@@ -126,13 +134,17 @@ sum(n_companies_south)
 #For this one we need to use stringr.
 #Ex: All levels -> n _bach = n_bach + 1, n_master = n_master + 1, n_phd = n_phd + 1
 #BS/MS ->  n_bach = n_bach + 1, n_master = n_master + 1 (Use  stringr so that we can get only BS or only MS)
-
+count(jdata$Standing)
+Standing_sub = jdata[which(jdata$Standing != "NA"),]
+North_sub_st = Standing_sub[which(Standing_sub$Region == "North CA"),]
+South_sub_st = Standing_sub[which(Standing_sub$Region == "South CA"),]
 ```
 
 Average salary:
 
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
+<<<<<<< HEAD
 Estimate_minimum_average_salary_omit_North = na.omit(North_sub$Estimate_minimum_average_salary)
 Estimate_minimum_average_salary_omit_mean_North = mean(Estimate_minimum_average_salary_omit_North)
 
@@ -144,6 +156,9 @@ Estimate_minimum_average_salary_omit_mean_South = mean(Estimate_minimum_average_
 Estimate_minimum_average_salary_omit_mean_South
 
 
+=======
+count(jdata$Estimate_minimum_average_salary)
+>>>>>>> 18d107593479e0315256513f519c2e1e62d764a4
 ```
 
 Create dataframe to plot out our histogram:
