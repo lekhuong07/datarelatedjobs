@@ -141,7 +141,7 @@ South_sub_st = Standing_sub[which(Standing_sub$Region == "South CA"),]
 ```
 
 Average salary:
-
+.
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
 <<<<<<< HEAD
