@@ -94,7 +94,6 @@ count(jdata$Standing)
 Standing_sub = jdata[which(jdata$Standing != "NA"),]
 North_sub_st = Standing_sub[which(Standing_sub$Region == "North CA"),]
 South_sub_st = Standing_sub[which(Standing_sub$Region == "South CA"),]
-Standing_sub
 ```
 
 Average salary:
