@@ -72,13 +72,53 @@ sum(n_companies_south)
 ```
 
 Average minimum experience:
-.
+
+Set up two subset for North and South
+
+
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
+Minimum_exp_years_omit_North = na.omit(North_sub$Minimum_exp_years)
+Minimum_exp_years_omit_Mean_North = mean(Minimum_exp_years_omit_North)
+ 
+Minimum_exp_years_omit_Mean_North
 
+Minimum_exp_years_omit_South = na.omit(South_sub$Minimum_exp_years)
+Minimum_exp_years_omit_Mean_South = mean(Minimum_exp_years_omit_South)
+
+Minimum_exp_years_omit_Mean_South
 ```
 
 Number of Bachelor's, Master's, Ph.D:
+
+```{r}
+count(North_sub$Standing)$freq
+
+n_BS_north = rep(0, length(count(North_sub$Standing)$freq))
+n_BS_south = rep(0, length(count(South_sub$Standing)$freq))
+
+
+for(i in 1:length(count(North_sub$Company)$freq)){
+  if(count(North_sub$Company)$freq[i] == 1){
+    n_companies_north[i] = count(North_sub$Company)$freq[i] 
+  } else{
+    n_companies_north[i] = 1
+  }
+}
+
+for(i in 1:length(count(South_sub$Company)$freq)){
+  if(count(South_sub$Company)$freq[i] == 1){
+    n_companies_south[i] = count(South_sub$Company)$freq[i] 
+  } else{
+    n_companies_south[i] = 1
+  }
+}
+
+sum(n_companies_north)
+sum(n_companies_south)
+
+```
+```
 
 ```{r}
 #Nearly same as counting number of companies:
@@ -93,6 +133,16 @@ Average salary:
 
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
+Estimate_minimum_average_salary_omit_North = na.omit(North_sub$Estimate_minimum_average_salary)
+Estimate_minimum_average_salary_omit_mean_North = mean(Estimate_minimum_average_salary_omit_North)
+
+Estimate_minimum_average_salary_omit_mean_North
+
+Estimate_minimum_average_salary_omit_South= na.omit(South_sub$Estimate_minimum_average_salary)
+Estimate_minimum_average_salary_omit_mean_South = mean(Estimate_minimum_average_salary_omit_South)
+
+Estimate_minimum_average_salary_omit_mean_South
+
 
 ```
 
