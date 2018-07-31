@@ -82,7 +82,7 @@ Set up two subset for North and South
 
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
-<<<<<<< HEAD
+
 Minimum_exp_years_omit_North = na.omit(North_sub$Minimum_exp_years)
 Minimum_exp_years_omit_Mean_North = mean(Minimum_exp_years_omit_North)
  
@@ -104,17 +104,17 @@ Number of Bachelor's, Master's, Ph.D:
 Standing_north_sub = North_sub$Standing
 BA_BS= str_extract_all(Standing_north_sub,"BA/BS")
 only_BS = str_replace_all(BA_BS,"BA/BS","BS")
-
+x = count(only_BS)
 
 n_BS_north = rep(0, length(count(North_sub$Standing)$freq))
 n_BS_south = rep(0, length(count(South_sub$Standing)$freq))
 
 
-for(i in 1:length(count(North_sub$Company)$freq)){
-  if(count(North_sub$Company)$freq[i] == 1){
-    n_companies_north[i] = count(North_sub$Company)$freq[i] 
+for(i in 1:length(count(North_sub$Standing)$freq)){
+  if(count(North_sub$Standing)$freq[i] == 1){
+    n_BS_north[i] = count(North_sub$Standing)$freq[i] 
   } else{
-    n_companies_north[i] = 1
+    n_BS_north[i] = 1
   }
 }
 
