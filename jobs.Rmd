@@ -114,11 +114,11 @@ Testing string r:
 
 ```{r}
 
-n_bach = length(str_subset(jdata$Standing, pattern = "^B")) + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")]
+n_bach = length(str_subset(jdata$Standing, pattern = "^BS")) + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")]  
 
 n_bach
 
-n_master = length(str_subset(jdata$Standing, pattern = "^MS")) + length(str_subset(jdata$Standing, pattern = "MS$")) +  count(jdata$Standing)$freq[which(count(jdata$Standing) == "MBA")] + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")]
+n_master = length(str_subset(jdata$Standing, pattern = "^MS")) + length(str_subset(jdata$Standing, pattern = "MS$")) +  count(jdata$Standing)$freq[which(count(jdata$Standing) == "MBA")] + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")] - length(str_subset(jdata$Standing, pattern = "^MS$"))
 
 n_master
 
@@ -126,7 +126,6 @@ n_PH.D = length(str_subset(jdata$standing, pattern = "^PH.D")) + length(str_subs
 
 n_PH.D
 ```
-
 
 Average salary:
 
