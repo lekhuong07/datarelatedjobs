@@ -1,6 +1,12 @@
 ---
-title: "Untitled"
-output: ''
+title: "Data Related jobs"
+author: "Khuong Le & Shiyong Liu"
+date: ''
+output:
+  html_document: 
+    toc: yes
+  pdf_document: default
+urlcolor: cyan
 ---
 
 Load different packages that will use in this model:
@@ -105,9 +111,11 @@ count(jdata$Estimate_minimum_average_salary)
 
 Create dataframe to plot out our histogram:
 
+
 ```{r}
 
 ```
+
 
 Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
 
