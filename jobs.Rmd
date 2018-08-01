@@ -24,12 +24,41 @@ head(jdata)
 Overiew about our dataset:
 
 ```{r}
-#summary(jdata)
-count(jdata$Standing)
-count(jdata$City)
+summary(jdata)
+str(data)
 ```
 
-Do some stuffs:
+1. Comparing between companies in the North and the South of California (using side-by-side histogram):
+
+- Number of companies in North vs South
+- Average minimum experience. 
+- Number of Bachelor's, Master's, Ph.D that companies recruiting in North vs South. (All levels = add 1 to every value)
+- Average salary in North vs South
+
+Data transformation:
+
+Minimum experience
+
+```{r}
+for(i in 1:length(jdata$Minimum_exp_years)){
+  if(jdata$Minimum_exp_years[i] == 1 & !is.na(jdata$Estimate_minimum_average_salary[i])){
+    if(jdata$Estimate_minimum_average_salary[i] >= 150000){
+      jdata$Minimum_exp_years[i] = 4
+    }
+    else if(jdata$Estimate_minimum_average_salary[i] >= 130000 &
+            jdata$Estimate_minimum_average_salary[i] <  150000){
+      jdata$Minimum_exp_years[i] = 3
+    }
+    else if (jdata$Estimate_minimum_average_salary[i] >= 100000 &
+             jdata$Estimate_minimum_average_salary[i] <  130000){
+      jdata$Minimum_exp_years[i] = 2
+    }
+    else{jdata$Minimum_exp_years[i] = 1}
+  } 
+}
+```
+
+Add variable names: Jobs density to show which city offers lots of position, which city offers less position.
 
 ```{r}
 for (i in 1:length(jdata$City))
@@ -44,32 +73,19 @@ if(count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] > 25){
 
 ```
 
-
-```{r}
-head(jdata,5)
-```
-
-1. Comparing between companies in the North and the South of California (using side-by-side histogram):
-
-- Number of companies in North vs South
-- Average minimum experience. 
-- Number of Bachelor's, Master's, Ph.D that companies recruiting in North vs South. (All levels = add 1 to every value)
-- Average salary in North vs South
-
 Set up 2 subsets for North and South:
 
 ```{r}
 North_sub = jdata[which(jdata$Region == "North CA"),]
-head(North_sub,20)
+head(North_sub,5)
 South_sub = jdata[which(jdata$Region == "South CA"),]
-head(South_sub,20)
+head(South_sub,5)
 ```
 
 
 Number of companies:
 
 ```{r}
-count(North_sub$Company)$freq
 n_companies_north = rep(0, length(count(North_sub$Company)$freq))
 n_companies_south = rep(0, length(count(South_sub$Company)$freq))
 
@@ -96,21 +112,42 @@ sum(n_companies_south)
 Average minimum experience:
 
 ```{r}
-#Use NA.omit to omit to take out NA values then use mean function to find average
-
-Minimum_exp_years_omit_North = na.omit(North_sub$Minimum_exp_years)
-Minimum_exp_years_omit_Mean_North = mean(Minimum_exp_years_omit_North)
+avg_exp_N = round(mean(North_sub$Minimum_exp_years),2)
+avg_exp_S = round(mean(South_sub$Minimum_exp_years),2)
+avg_exp_N
+avg_exp_S
+```
  
-Minimum_exp_years_omit_Mean_North
+Average salary:
 
-Minimum_exp_years_omit_South = na.omit(South_sub$Minimum_exp_years)
-Minimum_exp_years_omit_Mean_South = mean(Minimum_exp_years_omit_South)
+```{r}
+#Use NA.omit to omit to take out NA values then use mean function to find average
+Omit_yr_salary_N = na.omit(North_sub$Estimate_minimum_average_salary)
+Omit_yr_salary_S = na.omit(South_sub$Estimate_minimum_average_salary)
+North_Est_min_salary = round(mean(Omit_yr_salary_N)/1000,2)
+South_Est_min_salary = round(mean(Omit_yr_salary_S)/1000,2)
 
-Minimum_exp_years_omit_Mean_South
+North_Est_min_salary
+South_Est_min_salary
+```
 
-count(jdata$Minimum_exp_years)
-mean(North_sub$Minimum_exp_years)
-mean(South_sub$Minimum_exp_years)
+Setting up the dataframe for histogram:
+
+```{r}
+firstdf = data.frame(
+          Region = rep(c("North", "South"), each = 3),
+          Factor = rep(c(" Minimum exp", "Minimum estimate salary","Number Companies")),
+          Number = c(avg_exp_N, North_Est_min_salary, sum(n_companies_north),
+                     avg_exp_S, South_Est_min_salary, sum(n_companies_south)))
+
+plotfirst = ggplot(data = firstdf, aes(x = Factor, y = Number, fill = Region)) + 
+    geom_bar(stat = "identity", position=position_dodge()) +  
+    geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
+
+#jpeg('plotfirst.jpg')
+#plot(plotfirst)
+plotfirst
+
 ```
 
 Number of Bachelor's, Master's, Ph.D:
@@ -139,21 +176,6 @@ n_master
 
 n_PH.D = length(str_subset(jdata$standing, pattern = "^PH.D")) + length(str_subset(jdata$Standing, pattern = "PH.D$")) + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")]
 n_PH.D
-```
-
-Average salary:
-
-```{r}
-#Use NA.omit to omit to take out NA values then use mean function to find average
-Omit_yr_salary_N = na.omit(North_sub$Estimate_minimum_average_salary)
-Omit_yr_salary_S = na.omit(South_sub$Estimate_minimum_average_salary)
-North_Estimate_minimum_average_salary = mean(Omit_yr_salary_N)
-South_Estimate_minimum_average_salary = 
-mean(Omit_yr_salary)
-
-North_Estimate_minimum_average_salary
-South_Estimate_minimum_average_salary
-
 ```
 
 Create dataframe to plot out our histogram:
@@ -191,8 +213,6 @@ n_SQL = length(str_subset(jdata$Preferred_lang1, pattern = "^SQL$"))
 n_SQL
 ```
 
-Plot a histogram comparing 
- 
 Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
 
 Linear regression:
@@ -217,13 +237,15 @@ My_est_salary = function(Jobs_density, data){
     result = result * 2
   }  else if (Jobs_density == "Medium") {
     result = result * 1.5
-  }  else{ result = result * 1.25}
+  }  else{ result = result *  1.25}
   #if(Position == "Data Scientist" || Position == "Data Engineer")
   
   
   
   return (result)
 }
+```
 
+```{r}
 My_est_salary(jdata$Jobs_density[2], jdata) - jdata$Estimate_minimum_average_salary[2]
 ```
