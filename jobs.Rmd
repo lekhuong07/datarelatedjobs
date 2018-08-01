@@ -92,12 +92,24 @@ Average minimum experience:
 
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
+
+Minimum_exp_years_omit_North = na.omit(North_sub$Minimum_exp_years)
+Minimum_exp_years_omit_Mean_North = mean(Minimum_exp_years_omit_North)
+ 
+Minimum_exp_years_omit_Mean_North
+
+Minimum_exp_years_omit_South = na.omit(South_sub$Minimum_exp_years)
+Minimum_exp_years_omit_Mean_South = mean(Minimum_exp_years_omit_South)
+
+Minimum_exp_years_omit_Mean_South
+
 count(jdata$Minimum_exp_years)
 mean(North_sub$Minimum_exp_years)
 mean(South_sub$Minimum_exp_years)
 ```
 
 Number of Bachelor's, Master's, Ph.D:
+
 
 ```{r}
 #Nearly same as counting number of companies:
@@ -114,25 +126,72 @@ South_sub_st = Standing_sub[which(Standing_sub$Region == "South CA"),]
 Testing string r:
 
 ```{r}
-n_bach = length(str_subset(jdata$Standing, pattern = "^B")) + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")]
+
+n_bach = length(str_subset(jdata$Standing, pattern = "^BS")) + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")]  
+
 n_bach
 
-n_master = length(str_subset(jdata$Standing, pattern = "^MS")) + length(str_subset(jdata$Standing, pattern = "MS$")) +  count(jdata$Standing)$freq[which(count(jdata$Standing) == "MBA")] + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")]
-n_master
-```
+n_master = length(str_subset(jdata$Standing, pattern = "^MS")) + length(str_subset(jdata$Standing, pattern = "MS$")) +  count(jdata$Standing)$freq[which(count(jdata$Standing) == "MBA")] + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")] - length(str_subset(jdata$Standing, pattern = "^MS$"))
 
+n_master
+
+n_PH.D = length(str_subset(jdata$standing, pattern = "^PH.D")) + length(str_subset(jdata$Standing, pattern = "PH.D$")) + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")]
+
+n_PH.D
+```
 
 Average salary:
 
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
-count(jdata$Estimate_minimum_average_salary)
+Omit_yr_salary_N = 
+na.omit(North_sub$Estimate_minimum_average_salary)
+Omit_yr_salary_S = 
+na.omit(South_sub$Estimate_minimum_average_salary)
+North_Estimate_minimum_average_salary = mean(Omit_yr_salary_N)
+South_Estimate_minimum_average_salary = 
+mean(Omit_yr_salary)
+
+North_Estimate_minimum_average_salary
+
+South_Estimate_minimum_average_salary
+
+
 ```
 
 Create dataframe to plot out our histogram:
 
 
 Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
+
+```{r}
+# Top five most demanding languages:C++, Java, Python,R,SQL
+
+count(jdata$Preferred_lang1)
+
+count(jdata$Preferred_lang2)
+
+n_c_plus_plus = length(str_subset(jdata$Preferred_lang1, pattern = "^C\\++$")) + length(str_subset(jdata$Preferred_lang2, pattern = "C\\++$"))
+
+n_c_plus_plus
+
+n_Java = length(str_subset(jdata$Preferred_lang1, pattern = "^Java$")) + length(str_subset(jdata$Preferred_lang2, pattern = "^Java$"))
+
+n_Java
+
+n_Python = length(str_subset(jdata$Preferred_lang1, pattern = "^Python$")) + length(str_subset(jdata$Preferred_lang2, pattern = "^Python$"))
+
+n_Python
+
+n_R = length(str_subset(jdata$Preferred_lang1, pattern = "^R$")) + 
+ length(str_subset(jdata$Preferred_lang2, pattern = "R$"))
+
+n_R
+
+n_SQL = length(str_subset(jdata$Preferred_lang1, pattern = "^SQL$")) +  length(str_subset(jdata$Preferred_lang1, pattern = "/SQL$")) + length(str_subset(jdata$Preferred_lang2, pattern = "^SQL$"))
+
+n_SQL
+```
 
 Plot a histogram comparing 
  
