@@ -44,6 +44,11 @@ if(count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] > 25){
 
 ```
 
+
+```{r}
+head(jdata,5)
+```
+
 1. Comparing between companies in the North and the South of California (using side-by-side histogram):
 
 - Number of companies in North vs South
@@ -51,7 +56,7 @@ if(count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] > 25){
 - Number of Bachelor's, Master's, Ph.D that companies recruiting in North vs South. (All levels = add 1 to every value)
 - Average salary in North vs South
 
-Set up 2 subset for North and South:
+Set up 2 subsets for North and South:
 
 ```{r}
 North_sub = jdata[which(jdata$Region == "North CA"),]
@@ -110,7 +115,6 @@ mean(South_sub$Minimum_exp_years)
 
 Number of Bachelor's, Master's, Ph.D:
 
-
 ```{r}
 #Nearly same as counting number of companies:
 #Create 3 vectors: n_bach, n_master, n_phd to store the values.
@@ -128,15 +132,12 @@ Testing string r:
 ```{r}
 
 n_bach = length(str_subset(jdata$Standing, pattern = "^BS")) + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")]  
-
 n_bach
 
 n_master = length(str_subset(jdata$Standing, pattern = "^MS")) + length(str_subset(jdata$Standing, pattern = "MS$")) +  count(jdata$Standing)$freq[which(count(jdata$Standing) == "MBA")] + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")] - length(str_subset(jdata$Standing, pattern = "^MS$"))
-
 n_master
 
 n_PH.D = length(str_subset(jdata$standing, pattern = "^PH.D")) + length(str_subset(jdata$Standing, pattern = "PH.D$")) + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")]
-
 n_PH.D
 ```
 
@@ -144,18 +145,14 @@ Average salary:
 
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
-Omit_yr_salary_N = 
-na.omit(North_sub$Estimate_minimum_average_salary)
-Omit_yr_salary_S = 
-na.omit(South_sub$Estimate_minimum_average_salary)
+Omit_yr_salary_N = na.omit(North_sub$Estimate_minimum_average_salary)
+Omit_yr_salary_S = na.omit(South_sub$Estimate_minimum_average_salary)
 North_Estimate_minimum_average_salary = mean(Omit_yr_salary_N)
 South_Estimate_minimum_average_salary = 
 mean(Omit_yr_salary)
 
 North_Estimate_minimum_average_salary
-
 South_Estimate_minimum_average_salary
-
 
 ```
 
@@ -168,27 +165,28 @@ Plot a histogram to see the prefer language for both prefer language 1 and prefe
 # Top five most demanding languages:C++, Java, Python,R,SQL
 
 count(jdata$Preferred_lang1)
-
 count(jdata$Preferred_lang2)
 
-n_c_plus_plus = length(str_subset(jdata$Preferred_lang1, pattern = "^C\\++$")) + length(str_subset(jdata$Preferred_lang2, pattern = "C\\++$"))
+n_cpp = length(str_subset(jdata$Preferred_lang1, pattern = "^C\\++$")) 
+       +length(str_subset(jdata$Preferred_lang2, pattern = "C\\++$"))
+n_cpp
 
-n_c_plus_plus
+n_java = length(str_subset(jdata$Preferred_lang1, pattern = "^Java$")) 
+        +length(str_subset(jdata$Preferred_lang2, pattern = "^Java$"))
 
-n_Java = length(str_subset(jdata$Preferred_lang1, pattern = "^Java$")) + length(str_subset(jdata$Preferred_lang2, pattern = "^Java$"))
-
-n_Java
-
-n_Python = length(str_subset(jdata$Preferred_lang1, pattern = "^Python$")) + length(str_subset(jdata$Preferred_lang2, pattern = "^Python$"))
-
+n_java
+n_Python = length(str_subset(jdata$Preferred_lang1, pattern = "^Python$")) 
+          +length(str_subset(jdata$Preferred_lang2, pattern = "^Python$"))
 n_Python
 
 n_R = length(str_subset(jdata$Preferred_lang1, pattern = "^R$")) + 
- length(str_subset(jdata$Preferred_lang2, pattern = "R$"))
+     +length(str_subset(jdata$Preferred_lang2, pattern = "R$"))
 
 n_R
 
-n_SQL = length(str_subset(jdata$Preferred_lang1, pattern = "^SQL$")) +  length(str_subset(jdata$Preferred_lang1, pattern = "/SQL$")) + length(str_subset(jdata$Preferred_lang2, pattern = "^SQL$"))
+n_SQL = length(str_subset(jdata$Preferred_lang1, pattern = "^SQL$")) 
+       +length(str_subset(jdata$Preferred_lang1, pattern = "/SQL$")) 
+       +length(str_subset(jdata$Preferred_lang2, pattern = "^SQL$"))
 
 n_SQL
 ```
@@ -219,7 +217,7 @@ My_est_salary = function(Jobs_density, data){
     result = result * 2
   }  else if (Jobs_density == "Medium") {
     result = result * 1.5
-  }  else{ result = result *  1.25}
+  }  else{ result = result * 1.25}
   #if(Position == "Data Scientist" || Position == "Data Engineer")
   
   
