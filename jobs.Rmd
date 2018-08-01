@@ -104,7 +104,6 @@ for(i in 1:length(count(South_sub$Company)$freq)){
     n_companies_south[i] = 1
   }
 }
-
 sum(n_companies_north)
 sum(n_companies_south)
 ```
@@ -112,8 +111,8 @@ sum(n_companies_south)
 Average minimum experience:
 
 ```{r}
-avg_exp_N = round(mean(North_sub$Minimum_exp_years),2)
-avg_exp_S = round(mean(South_sub$Minimum_exp_years),2)
+avg_exp_N = round(mean(North_sub$Minimum_exp_years)*12,0)
+avg_exp_S = round(mean(South_sub$Minimum_exp_years)*12,0)
 avg_exp_N
 avg_exp_S
 ```
@@ -136,7 +135,7 @@ Setting up the dataframe for histogram:
 ```{r}
 firstdf = data.frame(
           Region = rep(c("North", "South"), each = 3),
-          Factor = rep(c(" Minimum exp", "Minimum estimate salary","Number Companies")),
+          Factor = rep(c("Average experience (in months)", "Average salary (in thousands)","Number Companies")),
           Number = c(avg_exp_N, North_Est_min_salary, sum(n_companies_north),
                      avg_exp_S, South_Est_min_salary, sum(n_companies_south)))
 
