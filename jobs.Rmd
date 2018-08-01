@@ -32,7 +32,6 @@ str(data)
 
 - Number of companies in North vs South
 - Average minimum experience. 
-- Number of Bachelor's, Master's, Ph.D that companies recruiting in North vs South. (All levels = add 1 to every value)
 - Average salary in North vs South
 
 Data transformation:
@@ -149,7 +148,9 @@ plotfirst
 
 ```
 
-Number of Bachelor's, Master's, Ph.D:
+2. Comparing between companies in the North and the South of California (using side-by-side histogram):
+- Number of Bachelor's, Master's, Ph.D that companies recruiting in North vs South. (All levels = add 1 to every value)
+- Top 3 most used languages.
 
 ```{r}
 #Nearly same as counting number of companies:
@@ -157,25 +158,32 @@ Number of Bachelor's, Master's, Ph.D:
 #For this one we need to use stringr.
 #Ex: All levels -> n_bach = n_bach + 1, n_master = n_master + 1, n_phd = n_phd + 1
 #BS/MS ->  n_bach = n_bach + 1, n_master = n_master + 1 (Use  stringr so that we can get only BS or only MS)
-count(jdata$Standing)
 Standing_sub = jdata[which(jdata$Standing != "NA"),]
 North_sub_st = Standing_sub[which(Standing_sub$Region == "North CA"),]
 South_sub_st = Standing_sub[which(Standing_sub$Region == "South CA"),]
 ```
 
-Testing string r:
+String numbers of standing North:
+
+Overivew:
+```{r}
+count(North_sub_st$Standing)
+```
+Details:
 
 ```{r}
 
-n_bach = length(str_subset(jdata$Standing, pattern = "^BS")) + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")]  
+n_bach = length(str_subset(North_sub_st$Standing, pattern = "^B")) + count(North_sub_st$Standing)$freq[which(count(North_sub_st$Standing) == "All levels")]  
 n_bach
 
-n_master = length(str_subset(jdata$Standing, pattern = "^MS")) + length(str_subset(jdata$Standing, pattern = "MS$")) +  count(jdata$Standing)$freq[which(count(jdata$Standing) == "MBA")] + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")] - length(str_subset(jdata$Standing, pattern = "^MS$"))
+n_master = length(str_subset(North_sub_st$Standing, pattern = "^MS")) + length(str_subset(North_sub_st$Standing, pattern = "MS$")) + count(North_sub_st$Standing)$freq[which(count(North_sub_st$Standing) == "All levels")] - length(str_subset(North_sub_st$Standing, pattern = "^MS$"))
 n_master
 
-n_PH.D = length(str_subset(jdata$standing, pattern = "^PH.D")) + length(str_subset(jdata$Standing, pattern = "PH.D$")) + count(jdata$Standing)$freq[which(count(jdata$Standing) == "All levels")]
+n_PH.D = length(str_subset(North_sub_st$standing, pattern = "^PH.D")) + length(str_subset(North_sub_st$Standing, pattern = "PH.D$")) + count(North_sub_st$Standing)$freq[which(count(North_sub_st$Standing) == "All levels")]
 n_PH.D
 ```
+
+String R, numbers of standing South:
 
 Create dataframe to plot out our histogram:
 
