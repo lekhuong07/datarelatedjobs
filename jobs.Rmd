@@ -24,11 +24,24 @@ head(jdata)
 Overiew about our dataset:
 
 ```{r}
-summary(jdata)
+#summary(jdata)
+count(jdata$Standing)
+count(jdata$City)
 ```
 
+Do some stuffs:
+
 ```{r}
-count(jdata$Standing)
+for (i in 1:length(jdata$City))
+if(count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] > 25){ 
+  jdata$Jobs_density[i] = "High"
+} else if(count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] < 25 &&
+          count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] > 10){
+  jdata$Jobs_density[i] = "Medium"
+} else {
+  jdata$Jobs_density[i] = "Low"
+}
+
 ```
 
 1. Comparing between companies in the North and the South of California (using side-by-side histogram):
@@ -45,8 +58,8 @@ North_sub = jdata[which(jdata$Region == "North CA"),]
 head(North_sub,20)
 South_sub = jdata[which(jdata$Region == "South CA"),]
 head(South_sub,20)
-
 ```
+
 
 Number of companies:
 
@@ -125,5 +138,35 @@ Plot a histogram comparing
  
 Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
 
-Write a function to predict the salary base on City, Position, Standing and Minimum experience. Simulate it around 1000 times to make sure our function correct
+Linear regression:
 
+```{r}
+model = lm(Estimate_minimum_average_salary ~ Minimum_exp_years, data = jdata)
+plot(jdata$Estimate_minimum_average_salary ~ jdata$Minimum_exp_years, main = "Experience vs Years", xlab = "Years", ylab = "Salary")
+abline(model)
+```
+
+```{r}
+jdata$Jobs_density[1]
+count(jdata$Position)
+```
+
+Write a function to predict the salary base on Jobs_density, Position, Standing. Simulate it around 1000 times to make sure our function correct
+
+```{r}
+My_est_salary = function(Jobs_density, data){
+  result = data$Estimate_minimum_average_salary[which.min(data$Estimate_minimum_average_salary)]
+  if(Jobs_density == "High"){
+    result = result * 2
+  }  else if (Jobs_density == "Medium") {
+    result = result * 1.5
+  }  else{ result = result *  1.25}
+  #if(Position == "Data Scientist" || Position == "Data Engineer")
+  
+  
+  
+  return (result)
+}
+
+My_est_salary(jdata$Jobs_density[2], jdata) - jdata$Estimate_minimum_average_salary[2]
+```
