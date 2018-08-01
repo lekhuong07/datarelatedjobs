@@ -131,13 +131,54 @@ Average salary:
 
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
-count(jdata$Estimate_minimum_average_salary)
+Omit_yr_salary_N = 
+na.omit(North_sub$Estimate_minimum_average_salary)
+Omit_yr_salary_S = 
+na.omit(South_sub$Estimate_minimum_average_salary)
+North_Estimate_minimum_average_salary = mean(Omit_yr_salary_N)
+South_Estimate_minimum_average_salary = 
+mean(Omit_yr_salary)
+
+North_Estimate_minimum_average_salary
+
+South_Estimate_minimum_average_salary
+
+
 ```
 
 Create dataframe to plot out our histogram:
 
 
 Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
+
+```{r}
+# Top five most demanding languages:C++, Java, Python,R,SQL
+
+count(jdata$Preferred_lang1)
+
+count(jdata$Preferred_lang2)
+
+n_c_plus_plus = length(str_subset(jdata$Preferred_lang1, pattern = "^C\\++$")) + length(str_subset(jdata$Preferred_lang2, pattern = "C\\++$"))
+
+n_c_plus_plus
+
+n_Java = length(str_subset(jdata$Preferred_lang1, pattern = "^Java$")) + length(str_subset(jdata$Preferred_lang2, pattern = "^Java$"))
+
+n_Java
+
+n_Python = length(str_subset(jdata$Preferred_lang1, pattern = "^Python$")) + length(str_subset(jdata$Preferred_lang2, pattern = "^Python$"))
+
+n_Python
+
+n_R = length(str_subset(jdata$Preferred_lang1, pattern = "^R$")) + 
+ length(str_subset(jdata$Preferred_lang2, pattern = "R$"))
+
+n_R
+
+n_SQL = length(str_subset(jdata$Preferred_lang1, pattern = "^SQL$")) +  length(str_subset(jdata$Preferred_lang1, pattern = "/SQL$")) + length(str_subset(jdata$Preferred_lang2, pattern = "^SQL$"))
+
+n_SQL
+```
 
 Plot a histogram comparing 
  
