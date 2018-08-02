@@ -186,31 +186,48 @@ Plot a histogram to see the prefer language for both prefer language 1 and prefe
 ```{r}
 # Top five most demanding languages:C++, Java, Python,R,SQL
 
-count(jdata$Preferred_lang1)
-count(jdata$Preferred_lang2)
+count(South_sub_st$Preferred_lang1)
+count(North_sub_st$Preferred_lang2)
 
-n_cpp = length(str_subset(jdata$Preferred_lang1, pattern = "^C\\++$")) 
-       +length(str_subset(jdata$Preferred_lang2, pattern = "C\\++$"))
-n_cpp
+n_cpp_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^C\\++$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "C\\++$"))
 
-n_java = length(str_subset(jdata$Preferred_lang1, pattern = "^Java$")) 
-        +length(str_subset(jdata$Preferred_lang2, pattern = "^Java$"))
+n_cpp_North
 
-n_java
-n_Python = length(str_subset(jdata$Preferred_lang1, pattern = "^Python$")) 
-          +length(str_subset(jdata$Preferred_lang2, pattern = "^Python$"))
-n_Python
+n_cpp_South = length(str_subset(South_sub_st$Preferred_lang1, pattern = "^C\\++$")) +length(str_subset(South_sub_st$Preferred_lang2, pattern = "C\\++$"))
+n_cpp_South
 
-n_R = length(str_subset(jdata$Preferred_lang1, pattern = "^R$")) + 
-     +length(str_subset(jdata$Preferred_lang2, pattern = "R$"))
+n_java_South = length(str_subset(South_sub_st$Preferred_lang1, pattern = "^Java$")) +length(str_subset(South_sub_st$Preferred_lang2, pattern = "^Java$"))
 
-n_R
+n_java_South
 
-n_SQL = length(str_subset(jdata$Preferred_lang1, pattern = "^SQL$")) 
-       +length(str_subset(jdata$Preferred_lang1, pattern = "/SQL$")) 
-       +length(str_subset(jdata$Preferred_lang2, pattern = "^SQL$"))
+n_java_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^Java$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "^Java$"))
 
-n_SQL
+n_java_North
+
+n_Python_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^Python$"))+length(str_subset(North_sub_st$Preferred_lang2, pattern = "^Python$"))
+
+n_Python_North
+
+n_Python_South = length(str_subset(South_sub_st$Preferred_lang1, pattern = "^Python$"))  +length(str_subset(South_sub_st$Preferred_lang2, pattern ="^Python$"))
+
+n_Python_South
+
+n_R_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^R$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "R$"))
+
+n_R_North
+
+n_R_South = length(str_subset(South_sub_st$Preferred_lang1, pattern = "^R$"))  +length(str_subset(South_sub_st$Preferred_lang2, pattern = "R$"))
+
+n_R_South
+
+n_SQL_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^SQL$")) +length(str_subset(North_sub_st$Preferred_lang1, pattern = "/SQL$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "^SQL$"))
+
+n_SQL_North
+
+n_SQL_South = length(str_subset(South_sub_st$Preferred_lang1, pattern = "^SQL$"))+ length(str_subset(South_sub_st$Preferred_lang1, pattern = "/SQL$"))+ length(str_subset(South_sub_st$Preferred_lang2, pattern = "^SQL$"))
+
+n_SQL_South
+
 ```
 
 Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
