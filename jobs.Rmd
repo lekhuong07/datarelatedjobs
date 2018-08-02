@@ -230,6 +230,7 @@ Plot a histogram to see the prefer language for both prefer language 1 and prefe
 # Top five most demanding languages:C++, Java, Python,R,SQL
 
 count(South_sub_st$Preferred_lang1)
+
 count(North_sub_st$Preferred_lang2)
 
 n_cpp_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^C\\++$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "C\\++$"))
