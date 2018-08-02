@@ -63,23 +63,19 @@ Add variable names: Jobs density to show which city offers lots of position, whi
 set.seed(2018)
 result = jdata$Estimate_minimum_average_salary[which.min(jdata$Estimate_minimum_average_salary)]
 for (i in 1:length(jdata$City))
-if(count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] > 25){ 
+if(count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] > mean(count(jdata$City)$freq)){ 
   jdata$Jobs_density[i] = "High"
-  jdata$City_Bonus[i] = round(rnorm(1, mean = result, sd = 500),1) * 2
-} else if(count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] < 25 &&
-          count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] > 10){
-  jdata$Jobs_density[i] = "Medium"
-  jdata$City_Bonus[i] = round(rnorm(1, mean = result, sd = 500),1) * 1.75
+  jdata$City_Bonus[i] = round(rnorm(1, mean = result * 1.75, sd = 500),1) 
 } else {
   jdata$Jobs_density[i] = "Low"
-  jdata$City_Bonus[i] = round(rnorm(1, mean = result, sd = 500),1) * 1.25
+  jdata$City_Bonus[i] = round(rnorm(1, mean = result* 1.25, sd = 500),1) 
 }
 
 ```
 
 Set up bonuses for salary:
 ```{r}
-count(jdata$Position)
+count(jdata$City)
 count(str_detect(jdata$Position, pattern = "Scientist"))
 count(str_detect(jdata$Position, pattern = "Analyst"))
 count(str_detect(jdata$Position, pattern = "Engineer"))
