@@ -204,7 +204,6 @@ count(North_sub_st$Standing)
 Details:
 
 ```{r}
-
 n_bach = length(str_subset(North_sub_st$Standing, pattern = "^B")) + count(North_sub_st$Standing)$freq[which(count(North_sub_st$Standing) == "All levels")]  
 n_bach
 
@@ -221,6 +220,11 @@ Create dataframe to plot out our histogram:
 
 
 Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
+
+```{r}
+count(jdata$Preferred_lang1)[order(count(jdata$Preferred_lang1)$freq),] 
+count(jdata$Preferred_lang2)
+```
 
 ```{r}
 # Top five most demanding languages:C++, Java, Python,R,SQL
