@@ -182,7 +182,7 @@ plotfirst
 
 2. Comparing between companies in the North and the South of California (using side-by-side histogram):
 - Number of Bachelor's, Master's, Ph.D that companies recruiting in North vs South. (All levels = add 1 to every value)
-- Top 3 most used languages.
+- Top 5 most used languages.
 
 ```{r}
 #Nearly same as counting number of companies:
@@ -271,6 +271,33 @@ n_SQL_South
 ```
 
 Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
+
+```{r}
+find_company = function(Standing, Experience,Region,Preferred_language){ 
+if (jdata$Standing == Standing){
+  Return(jdata$Company)
+} else if (jdata$Minimum_exp_years == Experience){
+return(jdata$Standing == Standing)
+} else if (jdata$Region == Region){
+  return(jdata$Company)
+} else if(jdata$Preferred_lang1 == Preferred_language){
+  return(jdata$Company)
+}
+  else {
+    return("NA")
+  }
+  }
+```
+
+```{r}
+find_company = function(Standing,Experience,Region,Preferred_language) { 
+  rep(0,jdata$Standing) for (i in 1:jdata$Standing) {
+   if (Standing = jdata$Standing)
+     return ( )
+  }
+}
+```
+
 
 Linear regression:
 
