@@ -277,24 +277,38 @@ n_SQL_South
 Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
 
 ```{r}
-find_company = function(Standing, Experience,Region,Preferred_language){ 
-if (jdata$Standing == Standing){
-  Return(jdata$Company)
-} else if (jdata$Minimum_exp_years == Experience){
-return(jdata$Standing == Standing)
-} else if (jdata$Region == Region){
-  return(jdata$Company)
-} else if(jdata$Preferred_lang1 == Preferred_language){
-  return(jdata$Company)
-}
-  else {
-    return("NA")
-  }
-  }
+count(jdata$Minimum_exp_years)
+length(jdata$Preferred_lang1 = "Python")
+```
+
+
+```{r}
+#jdata$Company[which(jdata$Preferred_lang1 == "SQL") || which( jdata$Preferred_lang2 == "R")]
+i = 5
+jdata$Company[which(jdata$Minimum_exp_years <= i)]
 ```
 
 ```{r}
-find_company = function(Standing,Experience,Region,Preferred_language) { 
+
+find_company = function(City, Experience, Region, Language){ 
+
+  if (jdata$Standing == Standing){
+    return(jdata$Company)
+  } else if (jdata$Minimum_exp_years == Experience){
+      return(jdata$Standing == Standing)
+  } else if (jdata$Region == Region){
+      return(jdata$Company)
+  } else if(jdata$Preferred_lang1 == Preferred_language){
+      return(jdata$Company)
+  }
+    else {
+    return("NA")
+  }
+}
+```
+
+```{r}
+find_company = function(Standing,Experience,Preferred_language) { 
   rep(0,jdata$Standing) for (i in 1:jdata$Standing) {
    if (Standing = jdata$Standing)
      return ( )
