@@ -20,6 +20,46 @@ jdata = read.csv("datarelatedjobs.csv")
 names(jdata)
 head(jdata)
 ```
+```{r}
+
+count(rep(0,length(jdata$Company[which(jdata$Preferred_lang1 == "Python")])))
+
+
+length(jdata$Company[which(jdata$Preferred_lang1 == "Python")])
+
+
+```
+
+
+```{r}
+jdata$Company[which(jdata$Preferred_lang1 == "Python")]
+
+count(rep(0,length(jdata$Preferred_lang1 == "Python"))
+    
+count(rep(0,length(jdata$Preferred_lang1 == "Python")))$freq
+
+
+jdata$Company[which(jdata$Preferred_lang1 == "SQL") || which( jdata$Preferred_lang2 == "R")]
+
+if(jdata$Preferred_lang1 == "SQL"||jdata$Preferred_lang2 == "R"){
+  return(jdata$Company[which(jdata$Preferred_lang1 == "SQL") || which( jdata$Preferred_lang2 == "R")]
+         
+x = jdata$Company[which(jdata$Preferred_lang1 == "Python")]
+y = 
+data.frame(x,y,z,u)
+
+rep(0,length(jdata$Region == ""))
+rep(0,length(jdata$Minimum_exp_years == "1")
+
+    jdata$City
+)}
+
+n_companies_north = rep(0, length(count(North_sub$Company)$freq))
+
+i = 5
+jdata$Company[which(jdata$Minimum_exp_years <= i)]
+
+```
 
 Overiew about our dataset:
 
@@ -286,7 +326,9 @@ return(jdata$Standing == Standing)
   else {
     return("NA")
   }
-  }
+}
+
+ jdata
 ```
 
 ```{r}
