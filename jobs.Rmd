@@ -356,47 +356,37 @@ head(OLS_df, 5)
 head(OLN_df, 5)
 ```
 
+Calculate Language in different way to double check:
 
 ```{r}
 n_cpp_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^C\\++$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "C\\++$"))
 
-n_cpp_North
-
 n_cpp_South = length(str_subset(South_sub_st$Preferred_lang1, pattern = "^C\\++$")) +length(str_subset(South_sub_st$Preferred_lang2, pattern = "C\\++$"))
-n_cpp_South
 
 n_java_South = length(str_subset(South_sub_st$Preferred_lang1, pattern = "^Java$")) +length(str_subset(South_sub_st$Preferred_lang2, pattern = "^Java$"))
 
-n_java_South
-
 n_java_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^Java$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "^Java$"))
-
-n_java_North
 
 n_Python_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^Python$"))+length(str_subset(North_sub_st$Preferred_lang2, pattern = "^Python$"))
 
-n_Python_North
-
 n_Python_South = length(str_subset(South_sub_st$Preferred_lang1, pattern = "^Python$"))  +length(str_subset(South_sub_st$Preferred_lang2, pattern ="^Python$"))
-
-n_Python_South
 
 n_R_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^R$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "R$"))
 
-n_R_North
-
 n_R_South = length(str_subset(South_sub_st$Preferred_lang1, pattern = "^R$"))  +length(str_subset(South_sub_st$Preferred_lang2, pattern = "R$"))
-
 n_R_South
-
 n_SQL_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^SQL$")) +length(str_subset(North_sub_st$Preferred_lang1, pattern = "/SQL$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "^SQL$"))
-
-n_SQL_North
 
 n_SQL_South = length(str_subset(South_sub_st$Preferred_lang1, pattern = "^SQL$"))+ length(str_subset(South_sub_st$Preferred_lang1, pattern = "/SQL$"))+ length(str_subset(South_sub_st$Preferred_lang2, pattern = "^SQL$"))
 
-n_SQL_South
 
+res = cbind(nl,sl)
+handwaydf = data.frame(NLang1 = c("SQL", "Python", "R", "Java", "C/C++"),
+                       NFreg1 = c(n_SQL_North, n_Python_North, n_R_North, n_java_North, n_cpp_North),
+                       SLang1 = c("SQL", "Python", "R", "Java", "C/C++"),
+                       NLang1 = c(n_SQL_South, n_Python_South, n_R_South, n_java_South, n_cpp_South))
+res
+handwaydf
 ```
 
 Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
