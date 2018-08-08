@@ -264,16 +264,59 @@ Output: Dataframe in order of your choice (decreasing/ increasing)
 count_order = function(col1, col2, order, top){
   ct1 = count(col1)
   ct2 = count(col2)
-  if(order == "increasing"){
-    ct1_pre = ct1[order(ct1$freq, decreasing = T),]
-    fresult  = data.frame(Faction1 = ct1_pre$x,
-                          Freqq1   = ct1_pre$freq)
-                          
+  if(order == "decreasing"){
+    ct1_inc = ct1[order(ct1$freq, decreasing = T),]
+    ct2_inc = ct2[order(ct2$freq, decreasing = T),]
+    
+    cl = length(ct1_inc$freq) - length(ct2_inc$freq)
+
+    if(cl < 0){
+      fresult = data.frame(Lang1 = c(as.character(ct1_inc$x), rep(NA,abs(cl))),
+                            Freq1 = c(ct1_inc$freq, rep(NA,abs(cl))),
+                            Lang2 = as.character(ct2_inc$x),
+                            Freq2 = ct2_inc$freq)                  
+
+    } else{
+      fresult = data.frame(Lang1 = as.character(ct1_inc$x),
+                            Freq1 = ct1_inc$freq,
+                            Lang2 = c(as.character(ct2_inc$x), rep(NA,cl)),
+                            Freq2 = c(ct2_inc$freq,rep(NA,cl)))         
+      }
   }
-  return(head(fresult,top))
+  else{
+    ct1_dec = ct1[order(ct1$freq, decreasing = F),]
+    ct2_dec = ct2[order(ct2$freq, decreasing = F),]
+    
+    cl = length(ct1_dec$freq) - length(ct2_dec$freq)
+
+    if(cl < 0){
+      fresult = data.frame(Lang1 = c(as.character(ct1_dec$x), rep(NA,abs(cl))),
+                            Freq1 = c(ct1_dec$freq, rep(NA,abs(cl))),
+                            Lang2 = as.character(ct2_dec$x),
+                            Freq2 = ct2_dec$freq)                  
+    } else{
+      fresult = data.frame(Lang1 = as.character(ct1_dec$x),
+                            Freq1 = ct1_dec$freq,
+                            Lang2 = c(as.character(ct2_dec$x), rep(NA,cl)),
+                            Freq2 = c(ct2_dec$freq,rep(NA,cl))) 
+    }
+  }
+  for(i in 1:20){
+    for(j in 1:20){
+      if(fresult$Lang1[i] == fresult$Lang2[j]){
+        fresult$Freq1[i] = fresult$Freq1[i] + fresult$Freq2[j]
+      }
+    }
+  }
+  if(order == "decreasing"){
+    res = fresult[order(fresult$Freq1, decreasing = T),]
+  } else {
+    res = fresult[order(fresult$Freq1, decreasing = F),]
+  }
+  return(res[1:top,1:2])
 }
 
-count_order(South_sub_st$Preferred_lang1, South_sub_st$Preferred_lang2,"increasing", 10)
+count_order(South_sub_st$Preferred_lang1, South_sub_st$Preferred_lang2,"decreasing", 10)
 ```
 
 Testing system
@@ -308,14 +351,14 @@ f1result
 ```{r}
 #Only top 20
 for(i in 1:20){
- for(j in 1:20)
+ for(j in 1:20){
    if(f1result$Faction1[i] == f1result$Faction2[j]){
       f1result$Freqq1[i] = f1result$Freqq1[i] + f1result$Freqq2[j]
    }
+ }
 }
+f1result[1:10,1:2]
 
-
-f1result  
 ```
 
 
