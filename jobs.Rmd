@@ -264,13 +264,51 @@ Output: Dataframe in order of your choice (decreasing/ increasing)
 count_order = function(col1, col2, order, top){
   ct1 = count(col1)
   ct2 = count(col2)
-  for(i in 1:length(ct2)){
-    for(k in 1:length(ct1)){
-      if(col2$x[i] == col1[k]){
-        col1$freq[k] = col1$freq[k] + 1
+  if(order == "decreasing"){
+    ct1_inc = ct1[order(ct1$freq, decreasing = T),]
+    ct2_inc = ct2[order(ct2$freq, decreasing = T),]
+    
+    cl = length(ct1_inc$freq) - length(ct2_inc$freq)
+
+    if(cl < 0){
+      fresult = data.frame(Lang1 = c(as.character(ct1_inc$x), rep(NA,abs(cl))),
+                            Freq1 = c(ct1_inc$freq, rep(NA,abs(cl))),
+                            Lang2 = as.character(ct2_inc$x),
+                            Freq2 = ct2_inc$freq)                  
+
+    } else{
+      fresult = data.frame(Lang1 = as.character(ct1_inc$x),
+                            Freq1 = ct1_inc$freq,
+                            Lang2 = c(as.character(ct2_inc$x), rep(NA,cl)),
+                            Freq2 = c(ct2_inc$freq,rep(NA,cl)))         
+      }
+  }
+  else{
+    ct1_dec = ct1[order(ct1$freq, decreasing = F),]
+    ct2_dec = ct2[order(ct2$freq, decreasing = F),]
+    
+    cl = length(ct1_dec$freq) - length(ct2_dec$freq)
+
+    if(cl < 0){
+      fresult = data.frame(Lang1 = c(as.character(ct1_dec$x), rep(NA,abs(cl))),
+                            Freq1 = c(ct1_dec$freq, rep(NA,abs(cl))),
+                            Lang2 = as.character(ct2_dec$x),
+                            Freq2 = ct2_dec$freq)                  
+    } else{
+      fresult = data.frame(Lang1 = as.character(ct1_dec$x),
+                            Freq1 = ct1_dec$freq,
+                            Lang2 = c(as.character(ct2_dec$x), rep(NA,cl)),
+                            Freq2 = c(ct2_dec$freq,rep(NA,cl))) 
+    }
+  }
+  for(i in 1:20){
+    for(j in 1:20){
+      if(fresult$Lang1[i] == fresult$Lang2[j]){
+        fresult$Freq1[i] = fresult$Freq1[i] + fresult$Freq2[j]
       }
     }
   }
+<<<<<<< HEAD
   if(order == "increasing"){
     ct1_pre = ct1[order(ct1$freq, decreasing = T),]
     result  = data.frame(Faction1 = ct1_pre$x,
@@ -278,18 +316,59 @@ count_order = function(col1, col2, order, top){
                           
   }
   return(head(result,top))
+=======
+  if(order == "decreasing"){
+    res = fresult[order(fresult$Freq1, decreasing = T),]
+  } else {
+    res = fresult[order(fresult$Freq1, decreasing = F),]
+  }
+  return(res[1:top,1:2])
+>>>>>>> f58919eebba829e79fd6fa011d6d0a45043a8891
 }
 
-count_order(South_sub_st$Preferred_lang1, South_sub_st$Preferred_lang2,"increasing", 10)
+count_order(South_sub_st$Preferred_lang1, South_sub_st$Preferred_lang2,"decreasing", 10)
+```
+
+Testing system
+
+```{r}
+order_lang_S1_pre = count(South_sub_st$Preferred_lang1)
+order_lang_S1     = order_lang_S1_pre[order(order_lang_S1_pre$freq, decreasing = T),]
+order_lang_S2_pre = count(South_sub_st$Preferred_lang2)
+order_lang_S2     = order_lang_S2_pre[order(order_lang_S2_pre$freq, decreasing = T),]
+
+cl = length(order_lang_S1$freq) - length(order_lang_S2$freq)
+
+if(cl < 0){
+  
+f1result = data.frame(Faction1 = c(as.character(order_lang_S1$x), rep(NA,abs(cl))),
+                      Freqq1   = c(order_lang_S1$freq, rep(NA,abs(cl))),
+                      Faction2 = as.character(order_lang_S2$x),
+                      Freqq2   = order_lang_S2$freq)                  
+
+} else{
+   f1result = data.frame(Faction1 = as.character(order_lang_S1$x),
+                       Freqq1   = order_lang_S1$freq,
+                       Faction2 = c(as.character(order_lang_S2$x), rep(NA,cl)),
+                       Freqq2   = c(order_lang_S2$freq,rep(NA,cl)))         
+}
+
+
+f1result
 ```
 
 
 ```{r}
-ct1 = count(South_sub_st$Preferred_lang1)
-ct2 = count(South_sub_st$Preferred_lang2)
-  
-ct1
-ct2
+#Only top 20
+for(i in 1:20){
+ for(j in 1:20){
+   if(f1result$Faction1[i] == f1result$Faction2[j]){
+      f1result$Freqq1[i] = f1result$Freqq1[i] + f1result$Freqq2[j]
+   }
+ }
+}
+f1result[1:10,1:2]
+
 ```
 
 
@@ -308,11 +387,14 @@ head(OLS_df, 5)
 head(OLN_df, 5)
 ```
 
+<<<<<<< HEAD
 ```{r}
 count(South_sub_st$Preferred_lang1)
 count(North_sub_st$Preferred_lang2)
 ```
 
+=======
+>>>>>>> f58919eebba829e79fd6fa011d6d0a45043a8891
 
 ```{r}
 n_cpp_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^C\\++$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "C\\++$"))
@@ -371,6 +453,13 @@ Write function to find out suitable companies: "find_company" that has 4 agrumen
 
 Companies_List = list(x,y,z)
   
+<<<<<<< HEAD
+=======
+}
+
+find_company("Python","Irvine",3,"NorthCA")
+
+>>>>>>> f58919eebba829e79fd6fa011d6d0a45043a8891
 ```
 
 
