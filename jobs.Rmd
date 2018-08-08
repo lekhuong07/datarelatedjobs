@@ -20,46 +20,6 @@ jdata = read.csv("datarelatedjobs.csv")
 names(jdata)
 head(jdata)
 ```
-```{r}
-
-count(rep(0,length(jdata$Company[which(jdata$Preferred_lang1 == "Python")])))
-
-
-length(jdata$Company[which(jdata$Preferred_lang1 == "Python")])
-
-
-```
-
-
-```{r}
-jdata$Company[which(jdata$Preferred_lang1 == "Python")]
-
-count(rep(0,length(jdata$Preferred_lang1 == "Python"))
-    
-count(rep(0,length(jdata$Preferred_lang1 == "Python")))$freq
-
-
-jdata$Company[which(jdata$Preferred_lang1 == "SQL") || which( jdata$Preferred_lang2 == "R")]
-
-if(jdata$Preferred_lang1 == "SQL"||jdata$Preferred_lang2 == "R"){
-  return(jdata$Company[which(jdata$Preferred_lang1 == "SQL") || which( jdata$Preferred_lang2 == "R")]
-         
-x = jdata$Company[which(jdata$Preferred_lang1 == "Python")]
-y = 
-data.frame(x,y,z,u)
-
-rep(0,length(jdata$Region == ""))
-rep(0,length(jdata$Minimum_exp_years == "1")
-
-    jdata$City
-)}
-
-n_companies_north = rep(0, length(count(North_sub$Company)$freq))
-
-i = 5
-jdata$Company[which(jdata$Minimum_exp_years <= i)]
-
-```
 
 Overiew about our dataset:
 
@@ -270,7 +230,6 @@ count(jdata$Preferred_lang2)
 # Top five most demanding languages:C++, Java, Python,R,SQL
 
 count(South_sub_st$Preferred_lang1)
-
 count(North_sub_st$Preferred_lang2)
 
 n_cpp_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^C\\++$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "C\\++$"))
@@ -316,50 +275,49 @@ n_SQL_South
 
 Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
 
+
+```{r}
+# Names of Companies that satisfy the conditions
+find_company = function(preferred_Language,City,Minimum_Experience,Region){
+  preferred_Language = a
+   x = jdata$Company[which(jdata$Preferred_lang1 == a)]
+  City = b
+   y = jdata$Company[which(jdata$City == b)]
+  Minimum_Experience = c 
+   z = jdata$Company[which(jdata$Minimum_exp_years == c)]
+  Region = e
+   u = jdata$Company[which(jdata$Region == e)]
+  
+return(list(x,y,z,u))
+  
+}
+
+find_company(Python,Irvine,3,NorthCA)
+
+```
+
+
+```{r}
+jdata$City
+
+rep(NA,600)
+```
+
+```{r}
+
+
+rep(0,length(jdata$Region == ""))
+rep(0,length(jdata$Minimum_exp_years == "1")
+
+n_companies_north = rep(0, length(count(North_sub$Company)$freq))
+
+
+```
+
+
 ```{r}
 count(jdata$Minimum_exp_years)
 length(jdata$Preferred_lang1 = "Python")
-```
-
-
-```{r}
-#jdata$Company[which(jdata$Preferred_lang1 == "SQL") || which( jdata$Preferred_lang2 == "R")]
-i = 5
-jdata$Company[which(jdata$Minimum_exp_years <= i)]
-```
-
-```{r}
-
-find_company = function(City, Experience, Region, Language){ 
-
-  if (jdata$Standing == Standing){
-    return(jdata$Company)
-  } else if (jdata$Minimum_exp_years == Experience){
-      return(jdata$Standing == Standing)
-  } else if (jdata$Region == Region){
-      return(jdata$Company)
-  } else if(jdata$Preferred_lang1 == Preferred_language){
-      return(jdata$Company)
-  }
-<<<<<<< HEAD
-}
-
- jdata
-=======
-    else {
-    return("NA")
-  }
-}
->>>>>>> 8544f4ea45f0750a0b6362e699959b094efa8d90
-```
-
-```{r}
-find_company = function(Standing,Experience,Preferred_language) { 
-  rep(0,jdata$Standing) for (i in 1:jdata$Standing) {
-   if (Standing = jdata$Standing)
-     return ( )
-  }
-}
 ```
 
 
