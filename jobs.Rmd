@@ -316,15 +316,16 @@ count_order = function(col1, col2, order, top){
   return(res[1:top,1:2])
 }
 
-sl = count_order(South_sub_st$Preferred_lang1, South_sub_st$Preferred_lang2,"decreasing", 5)
-nl = count_order(North_sub_st$Preferred_lang1, North_sub_st$Preferred_lang2,"decreasing", 5)
-sl
-nl
+
 ```
 
 Dataframe for counting Language:
 
 ```{r}
+sl = count_order(South_sub_st$Preferred_lang1, South_sub_st$Preferred_lang2,"decreasing", 5)
+nl = count_order(North_sub_st$Preferred_lang1, North_sub_st$Preferred_lang2,"decreasing", 5)
+sl
+nl
 thirddf = data.frame(
           Region = rep(c("North", "South"), each = 5),
           Factor = c("SQL", "Python", "R", "Java", "Tableau - C/C++", 
@@ -391,24 +392,22 @@ handwaydf
 
 Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
 
+Let's just use the top 10 preferred language:
+
+```{r}
+top10nl = count_order(North_sub_st$Preferred_lang1, North_sub_st$Preferred_lang2,"decreasing", 10)
+top10sl = count_order(South_sub_st$Preferred_lang1, South_sub_st$Preferred_lang2,"decreasing", 10)
+top10nl
+top10sl
+```
+
+Find_company function:
 
 ```{r}
 # Names of Companies that satisfy the conditions
 find_company = function(preferred_Language,City,Minimum_Experience,Region){
-  preferred_Language = a
-   x = jdata$Company[which(jdata$Preferred_lang1 == a)]
-  City = b
-   y = jdata$Company[which(jdata$City == b)]
-  Minimum_Experience = c 
-   z = jdata$Company[which(jdata$Minimum_exp_years == c)]
-  Region = e
-   u = jdata$Company[which(jdata$Region == e)]
-  
-return(list(x,y,z,u))
   
 }
-
-find_company("Python","Irvine",3,"NorthCA")
 
 ```
 
