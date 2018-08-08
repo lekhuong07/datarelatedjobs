@@ -316,53 +316,30 @@ count_order = function(col1, col2, order, top){
   return(res[1:top,1:2])
 }
 
-count_order(South_sub_st$Preferred_lang1, South_sub_st$Preferred_lang2,"decreasing", 10)
-count_order(North_sub_st$Preferred_lang1, North_sub_st$Preferred_lang2,"decreasing", 10)
-
+sl = count_order(South_sub_st$Preferred_lang1, South_sub_st$Preferred_lang2,"decreasing", 5)
+nl = count_order(North_sub_st$Preferred_lang1, North_sub_st$Preferred_lang2,"decreasing", 5)
+sl
+nl
 ```
 
-Testing system
+Dataframe for counting Language:
 
 ```{r}
-order_lang_S1_pre = count(North_sub_st$Preferred_lang1)
-order_lang_S1     = order_lang_S1_pre[order(order_lang_S1_pre$freq, decreasing = T),]
-order_lang_S2_pre = count(North_sub_st$Preferred_lang2)
-order_lang_S2     = order_lang_S2_pre[order(order_lang_S2_pre$freq, decreasing = T),]
+thirddf = data.frame(
+          Region = rep(c("North", "South"), each = 5),
+          Factor = c("SQL", "Python", "R", "Java", "Tableau - C/C++", 
+                     "SQL", "Python", "R", "Java", "Tableau - C/C++"),
+          Number = c(nl$Freq1[1], nl$Freq1[2], nl$Freq1[3], nl$Freq1[4], nl$Freq1[5], 
+                     sl$Freq1[1], sl$Freq1[2], sl$Freq1[3], sl$Freq1[4], sl$Freq1[5]))
 
-cl = length(order_lang_S1$freq) - length(order_lang_S2$freq)
+plotthird = ggplot(data = thirddf, aes(x = Factor, y = Number, fill = Region)) + 
+    geom_bar(stat = "identity", position=position_dodge()) +  
+    geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-if(cl < 0){
-  
-f1result = data.frame(Faction1 = c(as.character(order_lang_S1$x), rep(NA,abs(cl))),
-                      Freqq1   = c(order_lang_S1$freq, rep(NA,abs(cl))),
-                      Faction2 = as.character(order_lang_S2$x),
-                      Freqq2   = order_lang_S2$freq)                  
-
-} else{
-   f1result = data.frame(Faction1 = as.character(order_lang_S1$x),
-                       Freqq1   = order_lang_S1$freq,
-                       Faction2 = c(as.character(order_lang_S2$x), rep(NA,cl)),
-                       Freqq2   = c(order_lang_S2$freq,rep(NA,cl)))         
-}
-
-
-f1result
+#jpeg('plotsecond.jpg')
+#plot(plotsecond)
+plotthird
 ```
-
-
-```{r}
-#Only top 20
-for(i in 1:20){
- for(j in 1:20){
-   if(f1result$Faction1[i] == f1result$Faction2[j]){
-      f1result$Freqq1[i] = f1result$Freqq1[i] + f1result$Freqq2[j]
-   }
- }
-}
-f1result[1:10,1:2]
-
-```
-
 
 
 ```{r}
