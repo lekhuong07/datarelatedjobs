@@ -414,6 +414,12 @@ Companies_List = list(x,y,z)
 Companies_List
 ```
 
+```{r}
+find_company = function(Standing, Exp, Region, Language){
+  
+  
+}
+```
 
 
 Linear regression:
