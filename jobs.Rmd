@@ -203,20 +203,49 @@ count(North_sub_st$Standing)
 ```
 Details:
 
-```{r}
-n_bach = length(str_subset(North_sub_st$Standing, pattern = "^B")) + count(North_sub_st$Standing)$freq[which(count(North_sub_st$Standing) == "All levels")]  
-n_bach
-
-n_master = length(str_subset(North_sub_st$Standing, pattern = "^MS")) + length(str_subset(North_sub_st$Standing, pattern = "MS$")) + count(North_sub_st$Standing)$freq[which(count(North_sub_st$Standing) == "All levels")] - length(str_subset(North_sub_st$Standing, pattern = "^MS$"))
-n_master
-
-n_PH.D = length(str_subset(North_sub_st$standing, pattern = "^PH.D")) + length(str_subset(North_sub_st$Standing, pattern = "PH.D$")) + count(North_sub_st$Standing)$freq[which(count(North_sub_st$Standing) == "All levels")]
-n_PH.D
-```
-
 String R, numbers of standing South:
 
+```{r}
+n_bach_S = length(str_subset(South_sub_st$Standing, pattern = "^B")) + count(South_sub_st$Standing)$freq[which(count(South_sub_st$Standing) == "All levels")]  
+n_bach_S
+
+n_master_S = length(str_subset(South_sub_st$Standing, pattern = "^MS")) + length(str_subset(South_sub_st$Standing, pattern = "MS$")) + count(South_sub_st$Standing)$freq[which(count(South_sub_st$Standing) == "All levels")] - length(str_subset(South_sub_st$Standing, pattern = "^MS$"))
+n_master_S
+
+n_PH.D_S = length(str_subset(South_sub_st$standing, pattern = "^PH.D")) + length(str_subset(South_sub_st$Standing, pattern = "PH.D$")) + count(South_sub_st$Standing)$freq[which(count(South_sub_st$Standing) == "All levels")]
+n_PH.D_S
+```
+
+String R, numbers of standing North:
+
+```{r}
+n_bach_N = length(str_subset(North_sub_st$Standing, pattern = "^B")) + count(North_sub_st$Standing)$freq[which(count(North_sub_st$Standing) == "All levels")]  
+n_bach_N
+
+n_master_N = length(str_subset(North_sub_st$Standing, pattern = "^MS")) + length(str_subset(North_sub_st$Standing, pattern = "MS$")) + count(North_sub_st$Standing)$freq[which(count(North_sub_st$Standing) == "All levels")] - length(str_subset(North_sub_st$Standing, pattern = "^MS$"))
+n_master_N
+
+n_PH.D_N = length(str_subset(North_sub_st$standing, pattern = "^PH.D")) + length(str_subset(North_sub_st$Standing, pattern = "PH.D$")) + count(North_sub_st$Standing)$freq[which(count(North_sub_st$Standing) == "All levels")]
+n_PH.D_N
+```
+
 Create dataframe to plot out our histogram:
+
+```{r}
+secondtdf = data.frame(
+          Region = rep(c("North", "South"), each = 3),
+          Factor = rep(c("Bachelor degree", "Master degree","PH.D")),
+          Number = c(n_bach_N, n_master_N, n_PH.D_N,
+                     n_bach_S, n_master_S, n_PH.D_S))
+
+plotsecond = ggplot(data = secondtdf, aes(x = Factor, y = Number, fill = Region)) + 
+    geom_bar(stat = "identity", position=position_dodge()) +  
+    geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
+
+#jpeg('plotsecond.jpg')
+#plot(plotsecond)
+plotsecond
+```
 
 
 Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
@@ -226,12 +255,66 @@ count(jdata$Preferred_lang1)[order(count(jdata$Preferred_lang1)$freq),]
 count(jdata$Preferred_lang2)
 ```
 
+Write function to count and put them in decreasing order:
+
+Intputs: 2 columns that needs to be counted
+Output: Dataframe in order of your choice (decreasing/ increasing)
+
+```{r}
+count_order = function(col1, col2, order, top){
+  ct1 = count(col1)
+  ct2 = count(col2)
+  for(i in 1:length(ct2)){
+    for(k in 1:length(ct1)){
+      if(col2$x[i] == col1[k]){
+        col1$freq[k] = col1$freq[k] + 1
+      }
+    }
+  }
+  if(order == "increasing"){
+    ct1_pre = ct1[order(ct1$freq, decreasing = T),]
+    fresult  = data.frame(Faction1 = ct1_pre$x,
+                          Freqq1   = ct1_pre$freq)
+                          
+  }
+  return(head(fresult,top))
+}
+
+count_order(South_sub_st$Preferred_lang1, South_sub_st$Preferred_lang2,"increasing", 10)
+```
+
+
+```{r}
+ct1 = count(South_sub_st$Preferred_lang1)
+ct2 = count(South_sub_st$Preferred_lang2)
+  
+ct1
+ct2
+```
+
+
+
 ```{r}
 # Top five most demanding languages:C++, Java, Python,R,SQL
 
+<<<<<<< HEAD
+order_lang_S = count(South_sub_st$Preferred_lang1)
+order_lang_N = count(North_sub_st$Preferred_lang1)
+OLS = order_lang_S[order(order_lang_S$freq, decreasing = TRUE),]
+OLN = order_lang_N[order(order_lang_N$freq, decreasing = TRUE),]
+OLS_df = data.frame(Name_language = OLS$x, Freq = OLS$freq)
+OLN_df = data.frame(Name_language = OLN$x, Freq = OLN$freq)
+
+head(OLS_df, 5)
+head(OLN_df, 5)
+```
+
+=======
 count(South_sub_st$Preferred_lang1)
 count(North_sub_st$Preferred_lang2)
+>>>>>>> 7ef5007b8e20be982e912159ba0ae14042dc250f
 
+```{r}
 n_cpp_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^C\\++$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "C\\++$"))
 
 n_cpp_North
