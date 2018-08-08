@@ -317,14 +317,16 @@ count_order = function(col1, col2, order, top){
 }
 
 count_order(South_sub_st$Preferred_lang1, South_sub_st$Preferred_lang2,"decreasing", 10)
+count_order(North_sub_st$Preferred_lang1, North_sub_st$Preferred_lang2,"decreasing", 10)
+
 ```
 
 Testing system
 
 ```{r}
-order_lang_S1_pre = count(South_sub_st$Preferred_lang1)
+order_lang_S1_pre = count(North_sub_st$Preferred_lang1)
 order_lang_S1     = order_lang_S1_pre[order(order_lang_S1_pre$freq, decreasing = T),]
-order_lang_S2_pre = count(South_sub_st$Preferred_lang2)
+order_lang_S2_pre = count(North_sub_st$Preferred_lang2)
 order_lang_S2     = order_lang_S2_pre[order(order_lang_S2_pre$freq, decreasing = T),]
 
 cl = length(order_lang_S1$freq) - length(order_lang_S2$freq)
