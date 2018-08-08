@@ -244,7 +244,6 @@ count(North_sub_st$Standing)
 Details:
 
 ```{r}
-
 n_bach = length(str_subset(North_sub_st$Standing, pattern = "^B")) + count(North_sub_st$Standing)$freq[which(count(North_sub_st$Standing) == "All levels")]  
 n_bach
 
@@ -261,6 +260,11 @@ Create dataframe to plot out our histogram:
 
 
 Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
+
+```{r}
+count(jdata$Preferred_lang1)[order(count(jdata$Preferred_lang1)$freq),] 
+count(jdata$Preferred_lang2)
+```
 
 ```{r}
 # Top five most demanding languages:C++, Java, Python,R,SQL
@@ -313,26 +317,44 @@ n_SQL_South
 Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
 
 ```{r}
-find_company = function(Standing, Experience,Region,Preferred_language){ 
-if (jdata$Standing == Standing){
-  Return(jdata$Company)
-} else if (jdata$Minimum_exp_years == Experience){
-return(jdata$Standing == Standing)
-} else if (jdata$Region == Region){
-  return(jdata$Company)
-} else if(jdata$Preferred_lang1 == Preferred_language){
-  return(jdata$Company)
-}
-  else {
-    return("NA")
-  }
-}
+count(jdata$Minimum_exp_years)
+length(jdata$Preferred_lang1 = "Python")
+```
 
- jdata
+
+```{r}
+#jdata$Company[which(jdata$Preferred_lang1 == "SQL") || which( jdata$Preferred_lang2 == "R")]
+i = 5
+jdata$Company[which(jdata$Minimum_exp_years <= i)]
 ```
 
 ```{r}
-find_company = function(Standing,Experience,Region,Preferred_language) { 
+
+find_company = function(City, Experience, Region, Language){ 
+
+  if (jdata$Standing == Standing){
+    return(jdata$Company)
+  } else if (jdata$Minimum_exp_years == Experience){
+      return(jdata$Standing == Standing)
+  } else if (jdata$Region == Region){
+      return(jdata$Company)
+  } else if(jdata$Preferred_lang1 == Preferred_language){
+      return(jdata$Company)
+  }
+<<<<<<< HEAD
+}
+
+ jdata
+=======
+    else {
+    return("NA")
+  }
+}
+>>>>>>> 8544f4ea45f0750a0b6362e699959b094efa8d90
+```
+
+```{r}
+find_company = function(Standing,Experience,Preferred_language) { 
   rep(0,jdata$Standing) for (i in 1:jdata$Standing) {
    if (Standing = jdata$Standing)
      return ( )
