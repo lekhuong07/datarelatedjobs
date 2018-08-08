@@ -278,21 +278,19 @@ Write function to find out suitable companies: "find_company" that has 4 agrumen
 
 ```{r}
 # Names of Companies that satisfy the conditions
-find_company = function(preferred_Language,City,Minimum_Experience,Region){
-  preferred_Language = a
-   x = jdata$Company[which(jdata$Preferred_lang1 == a)]
-  City = b
-   y = jdata$Company[which(jdata$City == b)]
-  Minimum_Experience = c 
-   z = jdata$Company[which(jdata$Minimum_exp_years == c)]
-  Region = e
-   u = jdata$Company[which(jdata$Region == e)]
-  
-return(list(x,y,z,u))
+find_company = function(preferred_Language,Minimum_Experience,Region){
+  preferred_Language = c("Python","C++","Java","R","SQL")
+   x = jdata$Company[which(jdata$Preferred_lang1 ==   preferred_Language)]
+   Minimum_Experience = seq(20)
+   y = jdata$Company[which(jdata$Minimum_exp_years == Minimum_Experience)]
+   Region = c("North CA", "South CA")
+   z = jdata$Company[which(jdata$Region == Region)]
+
+return(list(x,y,z))
   
 }
 
-find_company(Python,Irvine,3,NorthCA)
+find_company(Python,2,NorthCA)
 
 ```
 
@@ -301,6 +299,8 @@ find_company(Python,Irvine,3,NorthCA)
 jdata$City
 
 rep(NA,600)
+
+list(x,y,z)
 ```
 
 ```{r}
