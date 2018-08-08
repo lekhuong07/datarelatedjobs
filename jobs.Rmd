@@ -405,35 +405,18 @@ Find_company function:
 
 ```{r}
 # Names of Companies that satisfy the conditions
-find_company = function(preferred_Language,City,Minimum_Experience,Region){
+# Make sure to change the value inside of "" to find the desired companies name that satisfied the conditions
+   u = c("Python") 
+   x = jdata$Company[which(jdata$Preferred_lang1 == u)]
+   i = c("1")
+   y = jdata$Company[which(jdata$Minimum_exp_years <= i)]
+   t = c("North CA")
+   z = jdata$Company[which(jdata$Region == t)]
+
+Companies_List = list(x,y,z)
   
-}
-
 ```
 
-
-```{r}
-jdata$City
-
-rep(NA,600)
-```
-
-```{r}
-
-
-rep(0,length(jdata$Region == ""))
-rep(0,length(jdata$Minimum_exp_years == "1")
-
-n_companies_north = rep(0, length(count(North_sub$Company)$freq))
-
-
-```
-
-
-```{r}
-count(jdata$Minimum_exp_years)
-length(jdata$Preferred_lang1 = "Python")
-```
 
 
 Linear regression:
