@@ -406,15 +406,12 @@ Find_company function:
 ```{r}
 # Names of Companies that satisfy the conditions
 # Make sure to change the value inside of "" to find the desired companies name that satisfied the conditions
-   u = c("Python") 
-   x = jdata$Company[which(jdata$Preferred_lang1 == u)]
-   i = c("1")
-   y = jdata$Company[which(jdata$Minimum_exp_years <= i)]
-   t = c("North CA")
-   z = jdata$Company[which(jdata$Region == t)]
+   x = jdata$Company[which(jdata$Preferred_lang1 == "Python")]
+   y = jdata$Company[which(jdata$Minimum_exp_years <= 1)]
+   z = jdata$Company[which(jdata$Region == "NorthCA")]
 
 Companies_List = list(x,y,z)
-  
+Companies_List
 ```
 
 
