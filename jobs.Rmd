@@ -403,15 +403,17 @@ rbind.data.frame(r1,r2)
 ```
 
 ```{r}
-find_company = function(Difficulty, Exp, Region){
+find_company = function(Difficulty, Exp, Region,Language){
   Argu_y = jdata$Company[which(jdata$Difficulty == Difficulty)]
   Argu_x = jdata$Company[which(jdata$Minimum_exp_years <= Exp)]
   Argu_z = jdata$Company[which(jdata$Region == Region)]
+  Argu_u = jdata$Company[which(jdata$Preferred_lang1 == Language)]
   
-  return(intersect(intersect(Argu_x,Argu_y),Argu_z))
+  return(intersect(intersect(Argu_x,Argu_y),intersect(Argu_z,Argu_u)))
 
 }
-find_company("Easy", 5, "North CA")
+
+find_company("Easy", 8, "North CA","Python")
 ```
 
 Our function will now base on Difficulty, Experience, Region, Best Language:
