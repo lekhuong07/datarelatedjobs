@@ -345,9 +345,6 @@ for (i in 1:length(jdata$Standing)){
 }
 ```
 
-<<<<<<< HEAD
-
-=======
 Write a function to compare the length of 4 dataframes:
 Inputs: 4 dataframe that we are looking at.
 Outputs: 
@@ -407,14 +404,14 @@ rbind.data.frame(r1,r2)
 
 ```{r}
 find_company = function(Difficulty, Exp, Region){
-  Argu_y = jdata$Company[which(jdata$Difficulty == "Python")]
-  Argu_x = jdata$Company[which(jdata$Minimum_exp_years == "5")]
-  Argu_z = jdata$Company[which(jdata$Region == "North CA")]
+  Argu_y = jdata$Company[which(jdata$Difficulty == Difficulty)]
+  Argu_x = jdata$Company[which(jdata$Minimum_exp_years <= Exp)]
+  Argu_z = jdata$Company[which(jdata$Region == Region)]
   
   return(intersect(intersect(Argu_x,Argu_y),Argu_z))
 
 }
-
+find_company("Easy", 5, "North CA")
 ```
 
 Our function will now base on Difficulty, Experience, Region, Best Language:
