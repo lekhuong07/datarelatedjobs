@@ -418,12 +418,6 @@ find_company("Easy", 8, "North CA","Python")
 
 Our function will now base on Difficulty, Experience, Region, Best Language:
 
-```{r}
-find_company = function(Difficulty, Exp, Region, Language){
-  
-  
-}
-```
 
 3 - Linear regression model to find our salary and check if it fit.
 
