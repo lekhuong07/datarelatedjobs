@@ -19,7 +19,6 @@ Set up the data:
 jdata = read.csv("datarelatedjobs.csv")
 jdata$X = NULL
 names(jdata)
-head(jdata)
 summary(jdata)
 str(jdata)
 ```
@@ -27,15 +26,24 @@ str(jdata)
 Transform the data.
 
 ```{r}
+jdata$Preferred_mj1 = as.character(jdata$Preferred_mj1)
+jdata$Preferred_mj2 = as.character(jdata$Preferred_mj2)
+
 for(i in 1:length(jdata$Standing)){
   if(is.na(jdata$Standing[i])){
     jdata$Standing[i] = "All levels"
   }
-}  
-```
-
-```{r}
-count(jdata$Standing)
+} 
+for(i in 1:length(jdata$Preferred_mj1)){
+  if(is.na(jdata$Preferred_mj1[i])){
+    jdata$Preferred_mj1[i] = "Data_related"
+  }  
+  if(is.na(jdata$Preferred_mj2[i])){
+      jdata$Preferred_mj2[i] = "Data_related"
+  }
+} 
+count(jdata$Preferred_mj2)[order(count(jdata$Preferred_mj2)$freq, decreasing = T),]
+head(jdata,10)
 ```
 
 1. Comparing between companies in the North and the South of California (using side-by-side histogram):
@@ -81,8 +89,8 @@ sum(n_companies_south)
 Average minimum experience:
 
 ```{r}
-avg_exp_N = round(mean(North_sub$Minimum_exp_years)*12,0)
-avg_exp_S = round(mean(South_sub$Minimum_exp_years)*12,0)
+avg_exp_N = round(mean(North_sub$Min_exp)*12,0)
+avg_exp_S = round(mean(South_sub$Min_exp)*12,0)
 avg_exp_N
 avg_exp_S
 ```
@@ -91,8 +99,8 @@ Average salary:
 
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
-Omit_yr_salary_N = na.omit(North_sub$Estimate_minimum_average_salary)
-Omit_yr_salary_S = na.omit(South_sub$Estimate_minimum_average_salary)
+Omit_yr_salary_N = na.omit(North_sub$Est_min_avg_salary)
+Omit_yr_salary_S = na.omit(South_sub$Est_min_avg_salary)
 North_Est_min_salary = round(mean(Omit_yr_salary_N)/1000,2)
 South_Est_min_salary = round(mean(Omit_yr_salary_S)/1000,2)
 
@@ -122,6 +130,7 @@ plotfirst
 2. Comparing between companies in the North and the South of California (using side-by-side histogram):
 - Number of Bachelor's, Master's, Ph.D that companies recruiting in North vs South. (All levels = add 1 to every value)
 - Top 5 most used languages.
+- Top 5 major needs.
 
 ```{r}
 #Nearly same as counting number of companies:
@@ -176,15 +185,6 @@ plotsecond = ggplot(data = secondtdf, aes(x = Factor, y = Number, fill = Region)
 #jpeg('plotsecond.jpg')
 #plot(plotsecond)
 plotsecond
-```
-
-
-Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
-
-```{r}
-count(jdata$Preferred_lang1)[order(count(jdata$Preferred_lang1)$freq),] 
-
-count(jdata$Preferred_lang2)
 ```
 
 Write function to count and put them in decreasing order:
@@ -251,6 +251,7 @@ count_order = function(col1, col2, order, top){
 
 ```
 
+Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
 Dataframe for counting Language:
 
 ```{r}
@@ -260,8 +261,7 @@ sl
 nl
 thirddf = data.frame(
           Region = rep(c("North", "South"), each = 5),
-          Factor = c("SQL", "Python", "R", "Java", "Tableau - C/C++", 
-                     "SQL", "Python", "R", "Java", "Tableau - C/C++"),
+          Factor = rep(c("SQL", "Python", "R", "Java", "Tableau - C/C++"),2),
           Number = c(nl$Freq1[1], nl$Freq1[2], nl$Freq1[3], nl$Freq1[4], nl$Freq1[5], 
                      sl$Freq1[1], sl$Freq1[2], sl$Freq1[3], sl$Freq1[4], sl$Freq1[5]))
 
@@ -272,21 +272,6 @@ plotthird = ggplot(data = thirddf, aes(x = Factor, y = Number, fill = Region)) +
 #jpeg('plotsecond.jpg')
 #plot(plotsecond)
 plotthird
-```
-
-
-```{r}
-# Top five most demanding languages:C++, Java, Python,R,SQL
-
-order_lang_S = count(South_sub_st$Preferred_lang1)
-order_lang_N = count(North_sub_st$Preferred_lang1)
-OLS = order_lang_S[order(order_lang_S$freq, decreasing = TRUE),]
-OLN = order_lang_N[order(order_lang_N$freq, decreasing = TRUE),]
-OLS_df = data.frame(Name_language = OLS$x, Freq = OLS$freq)
-OLN_df = data.frame(Name_language = OLN$x, Freq = OLN$freq)
-
-head(OLS_df, 5)
-head(OLN_df, 5)
 ```
 
 Calculate Language in different way to double check:
@@ -322,7 +307,36 @@ res
 handwaydf
 ```
 
-Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
+Plot a histogram to see the prefer major for both prefer major 1 and prefer major 2
+Dataframe for counting Major:
+
+
+```{r}
+smj = count_order(South_sub_st$Preferred_mj1, South_sub_st$Preferred_mj2,"decreasing", 5)
+nmj = count_order(North_sub_st$Preferred_mj1, North_sub_st$Preferred_mj2,"decreasing", 5)
+smj
+nmj
+forthdf = data.frame(
+          Region = rep(c("North", "South"), each = 5),
+          Factor = rep(c("CS", "Tech field - Stats", "Stats - Tech field", "Math", "Engineering"),2), 
+          Number = c(nmj$Freq1[1], nmj$Freq1[2], nmj$Freq1[3], nmj$Freq1[4], nmj$Freq1[5], 
+                     smj$Freq1[1], smj$Freq1[2], smj$Freq1[3], smj$Freq1[4], smj$Freq1[5]))
+
+plotforth = ggplot(data = forthdf, aes(x = Factor, y = Number, fill = Region)) + 
+    geom_bar(stat = "identity", position=position_dodge()) +  
+    geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
+
+#jpeg('plotsecond.jpg')
+#plot(plotsecond)
+plotforth
+
+
+```
+
+Plot a histogram to see the prefer major for both prefer major 1 and prefer major 2
+Dataframe for counting Major:
+
+3 - Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
 
 Let's just use the top 20 preferred language:
 
@@ -331,7 +345,10 @@ top20 = count_order(jdata$Preferred_lang1, jdata$Preferred_lang2,"decreasing", 2
 top20
 ```
 
-Change the data in the way that if "Bachelor"/"All levels" is able to be looked at means Easy, "Master" means Medium and "PHD" will be Hard
+Change the data in the way that if "Bachelor"/"All levels" is able to be looked at means Easy, "Master" means Medium and "PHD" will be Hard.
+
+Our function will now base on Difficulty, Experience, Region, Best Language:
+
 
 ```{r}
 for (i in 1:length(jdata$Standing)){
@@ -385,10 +402,7 @@ rbind(r1,r2)
 find_company("Medium", 5, "South CA","R")
 ```
 
-Our function will now base on Difficulty, Experience, Region, Best Language:
-
-
-3 - Linear regression model to find our salary and check if it fit.
+4 - Linear regression model to find our salary and check if it fit.
 
 Data transformation:
 
@@ -451,10 +465,6 @@ for (i in 1:length(jdata$Position)){
 }
 #as.numeric(jdata$Posi_Bonus)
 head(jdata,10)
-```
-
-```{r}
-
 ```
 
 Original model:
