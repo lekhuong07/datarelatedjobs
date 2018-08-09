@@ -413,7 +413,13 @@ find_company = function(Difficulty, Exp, Region,Language){
 
 }
 
-find_company("Easy", 9, "North CA","Python")
+find_company("Easy", 2, "South CA","R")
+
+```
+
+
+```{r}
+ Argu_u = jdata$Company[which(jdata$Preferred_lang1 == "Python")] || jdata$Companywhich(jdata$Preferred_lang2 == "Python")]
 ```
 
 Our function will now base on Difficulty, Experience, Region, Best Language:
@@ -482,10 +488,6 @@ for (i in 1:length(jdata$Position)){
 }
 #as.numeric(jdata$Posi_Bonus)
 head(jdata,10)
-```
-
-```{r}
-
 ```
 
 Original model:
