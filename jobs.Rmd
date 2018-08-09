@@ -346,10 +346,18 @@ for (i in 1:length(jdata$Standing)){
 ```
 
 ```{r}
-Instruction:
-  First subset our data into small subset that satisfies only 1 agrument.
-  Compare the length of those 4 small subsets. 
-  Find the intersection subset between those 4 subsets that is the largest will be our result
+# Instruction:
+#   First subset our data into small subset that satisfies only 1 agrument.
+#   Compare the length of those 4 small subsets. 
+#   Find the intersection subset between those 4 subsets that is the largest will be our result
+jdata$Difficulty[which(jdata$Difficulty == "Easy"),]
+
+
+# jdata$Minimum_exp_years
+# jdata$Region
+# jdata$Preferred_lang1
+
+
 ```
 
 Our function will now base on Difficulty, Experience, Region, Best Language:

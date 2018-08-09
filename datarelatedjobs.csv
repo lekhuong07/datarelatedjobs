@@ -1,4 +1,4 @@
-City,Company,Region,Position,Employment_type,Industry,Standing,Preferred_mj1,Preferred_mj2,Preferred_lang1,Preferred_lang2,Minimum_exp_years,Estimate_minimum_average_salary,
+City,Company,Region,Position,Employment_type,Industry,Standing,Preferred_mj1,Preferred_mj2,Preferred_lang1,Preferred_lang2,Min_exp,Est_min_avg_salary,
 San Francisco,Wish,North CA,Data Analyst,Full time,Computer Software,BA/BS,Computer Science,Math,SQL,PHP,4,67000,
 San Jose,FICO,North CA,Artificial intelligence Engineer,Full time,Computer Software,MS,Computer Science,Statistics,Python,Java,1,107869,
 Santa Monica,Aptiv,South CA,Machine Learning Computer Engineer,Full time,Computer Software,PH.D,Computer Engineering,Math,Python,C/C++,2,NA,
