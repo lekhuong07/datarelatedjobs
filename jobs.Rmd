@@ -345,82 +345,47 @@ for (i in 1:length(jdata$Standing)){
 }
 ```
 
-Write a function to compare the length of 4 dataframes:
-Inputs: 4 dataframe that we are looking at.
-Outputs: 
-
-```{r}
-compare_dflength = function(df1, df2, df3,df4){
-  res = rep(0, 8)
-  compare = c(nrow(df1), nrow(df2),nrow(df3), nrow(df4))
-  
-  res[1] = max(compare)
-  res[2] = max(compare[compare != res[1]])
-  res[3] = min(compare[compare != min(compare)])
-  res[4] = min(compare)
-  res[5:8] = compare
-  return(res)
-}
-```
-
-```{r}
-# Instruction:
-#   First subset our data into small subset that satisfies only 1 agrument.
-#   Compare the length of those 4 small subsets. 
-#   Find the intersection subset between those 4 subsets that is the largest will be our result
-a = jdata[which(jdata$Difficulty == "Easy"),]
-b = jdata[which(jdata$Min_exp <=2),]
-c = jdata[which(jdata$Region == "North CA"),]
-d = jdata[which(jdata$Preferred_lang1 == "R"),]
-
-# jdata$Minimum_exp_years
-# jdata$Region
-# jdata$Preferred_lang1
-```
-
-```{r}
-Argu_x = jdata$Company[which(jdata$Minimum_exp_years == "5")]
-Argu_y = jdata$Company[which(jdata$Difficulty == "Easy")]
-Argu_z = jdata$Company[which(jdata$Region == "North CA")]
-Argu_u = jdata$Company[which(jdata$Preferred_lang1 == "Python")]
-
-intersect(intersect(Argu_x,Argu_y),intersect(Argu_z,Argu_u))
-
-
-e = a[which(a$Region == "North CA"),]
-f = e[which(e$Min_exp <=2),]
-f[which(f$Preferred_lang1 == "R"),]
-
-e1 = d[which(d$Min_exp <= 2),]
-f1 = e1[which(e1$Region == "North CA"),]
-r1 = data.frame(f1[which(f1$Difficulty == "Easy"),])
-
-e2 = b[which(b$Region == "North CA"),]
-f2 = e2[which(e2$Difficulty == "Easy"),]
-r2 = data.frame(f2[which(f2$Preferred_lang2 == "R"),])
-
-rbind.data.frame(r1,r2)[2]
-```
+Function find_company using intersect and union subsets.
 
 ```{r}
 find_company = function(Difficulty, Exp, Region,Language){
   Argu_y = jdata$Company[which(jdata$Difficulty == Difficulty)]
   Argu_x = jdata$Company[which(jdata$Min_exp <= Exp)]
   Argu_z = jdata$Company[which(jdata$Region == Region)]
-  Argu_u = jdata$Company[which(jdata$Preferred_lang1 == Language) || which(jdata$Preferred_lang2 == Language)]
+  Argu_u1 = jdata$Company[which(jdata$Preferred_lang1 == Language)]
+  Argu_u2 = jdata$Company[which(jdata$Preferred_lang2 == Language)]
   
-  return(intersect(intersect(Argu_x,Argu_y),intersect(Argu_z,Argu_u)))
+  return(union(intersect(intersect(Argu_x,Argu_y),intersect(Argu_z,Argu_u1)),intersect(intersect(Argu_x,Argu_y),intersect(Argu_z,Argu_u2))))
 
 }
+
+find_company("Medium", 5, "South CA","SQL")
+```
+
+Another way using subset find_company:
+
+```{r}
+n_find_company = function(Difficulty, Exp, Region,Language){
+a = jdata$Company[which(jdata$Difficulty == Difficulty),]
+b = jdata$Company[which(jdata$Min_exp <= Exp),]
+c = jdata$Company[which(jdata$Region == Region),]
+d1 = jdata$Company[which(jdata$Preferred_lang1 == Language),]
+d2 = jdata$Company[which(jdata$Preferred_lang2 == Language),]
+
+pre_r1 = a[which(a$Min_exp <= Exp)]
+nex_r1 = pre_r1[which(pre_r1$Region == Region)]
+r1     = nex_r1[which(nex_r1$Preferred_lang1 == Language)]
+
+pre_r2 = a[which(a$Min_exp <= Exp)]
+nex_r2 = pre_r2[which(pre_r2$Region == Region)]
+r2     = nex_r2[which(nex_r2$Preferred_lang2 == Language)]
+
+rbind(r1,r2)
 
 find_company("Easy", 2, "South CA","R")
 
 ```
 
-
-```{r}
- Argu_u = jdata$Company[which(jdata$Preferred_lang1 == "Python")] || jdata$Companywhich(jdata$Preferred_lang2 == "Python")]
-```
 
 Our function will now base on Difficulty, Experience, Region, Best Language:
 
