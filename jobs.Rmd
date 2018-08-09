@@ -405,7 +405,7 @@ rbind.data.frame(r1,r2)[2]
 ```{r}
 find_company = function(Difficulty, Exp, Region,Language){
   Argu_y = jdata$Company[which(jdata$Difficulty == Difficulty)]
-  Argu_x = jdata$Company[which(jdata$Minimum_exp_years <= Exp)]
+  Argu_x = jdata$Company[which(jdata$Min_exp <= Exp)]
   Argu_z = jdata$Company[which(jdata$Region == Region)]
   Argu_u = jdata$Company[which(jdata$Preferred_lang1 == Language)]
   
