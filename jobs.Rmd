@@ -346,11 +346,29 @@ for (i in 1:length(jdata$Standing)){
 }
 ```
 
+
+
 ```{r}
 Instruction:
   First subset our data into small subset that satisfies only 1 agrument.
   Compare the length of those 4 small subsets. 
   Find the intersection subset between those 4 subsets that is the largest will be our result
+```
+
+```{r}
+Argu_x = jdata$Company[which(jdata$Minimum_exp_years == "5")]
+length(Argu_x)
+
+length(Argu_x) %in% length(Argu_y)
+
+Argu_x_empty = rep(0,length(Argu_x))
+Argu_y = jdata$Company[which(jdata$Difficulty == "Easy")]
+length(Argu_y)
+Argu_z = jdata$Company[which(jdata$Region == "North CA")]
+length(Argu_z)
+Argu_u = jdata$Company[which(jdata$Preferred_lang1 == "Python")]
+length(Argu_u)
+
 ```
 
 Our function will now base on Difficulty, Experience, Region, Best Language:
