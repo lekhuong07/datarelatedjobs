@@ -252,6 +252,7 @@ Plot a histogram to see the prefer language for both prefer language 1 and prefe
 
 ```{r}
 count(jdata$Preferred_lang1)[order(count(jdata$Preferred_lang1)$freq),] 
+
 count(jdata$Preferred_lang2)
 ```
 
