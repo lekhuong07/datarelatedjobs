@@ -413,7 +413,7 @@ find_company = function(Difficulty, Exp, Region,Language){
 
 }
 
-find_company("Easy", 8, "North CA","Python")
+find_company("Easy", 9, "North CA","Python")
 ```
 
 Our function will now base on Difficulty, Experience, Region, Best Language:
