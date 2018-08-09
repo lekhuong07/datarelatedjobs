@@ -20,14 +20,13 @@ jdata = read.csv("datarelatedjobs.csv")
 jdata$X = NULL
 names(jdata)
 head(jdata)
-```
-
-Overiew about our dataset:
-
-```{r}
 summary(jdata)
 str(jdata)
+```
 
+Transform the data.
+
+```{r}
 for(i in 1:length(jdata$Standing)){
   if(is.na(jdata$Standing[i])){
     jdata$Standing[i] = "All levels"
@@ -345,18 +344,53 @@ for (i in 1:length(jdata$Standing)){
 }
 ```
 
+Write a function to compare the length of 4 dataframes:
+Inputs: 4 dataframe that we are looking at.
+Outputs: 
+
+```{r}
+compare_dflength = function(df1, df2, df3,df4){
+  res = rep(0, 8)
+  compare = c(nrow(df1), nrow(df2),nrow(df3), nrow(df4))
+  
+  res[1] = max(compare)
+  res[2] = max(compare[compare != res[1]])
+  res[3] = min(compare[compare != min(compare)])
+  res[4] = min(compare)
+  res[5:8] = compare
+  return(res)
+}
+```
+
 ```{r}
 # Instruction:
 #   First subset our data into small subset that satisfies only 1 agrument.
 #   Compare the length of those 4 small subsets. 
 #   Find the intersection subset between those 4 subsets that is the largest will be our result
-jdata$Difficulty[which(jdata$Difficulty == "Easy"),]
+a = jdata[which(jdata$Difficulty == "Easy"),]
+b = jdata[which(jdata$Min_exp <=2),]
+c = jdata[which(jdata$Region == "North CA"),]
+d = jdata[which(jdata$Preferred_lang1 == "R"),]
+
+compare_dflength(a,b,c,d)
 
 
-# jdata$Minimum_exp_years
-# jdata$Region
-# jdata$Preferred_lang1
+e = a[which(a$Region == "North CA"),]
+f = e[which(e$Min_exp <=2),]
+f[which(f$Preferred_lang1 == "R"),]
 
+e1 = d[which(d$Min_exp <= 2),]
+f1 = e1[which(e1$Region == "North CA"),]
+r1 = data.frame(f1[which(f1$Difficulty == "Easy"),])
+
+e2 = b[which(b$Region == "North CA"),]
+f2 = e2[which(e2$Difficulty == "Easy"),]
+r2 = data.frame(f2[which(f2$Preferred_lang2 == "R"),])
+
+rbind.data.frame(r1,r2)
+```
+
+```{r}
 
 ```
 
@@ -376,20 +410,20 @@ Data transformation:
 Minimum experience
 
 ```{r}
-for(i in 1:length(jdata$Minimum_exp_years)){
-  if(jdata$Minimum_exp_years[i] == 1 & !is.na(jdata$Estimate_minimum_average_salary[i])){
-    if(jdata$Estimate_minimum_average_salary[i] >= 150000){
-      jdata$Minimum_exp_years[i] = 4
+for(i in 1:length(jdata$Min_exp)){
+  if(jdata$Min_exp[i] == 1 & !is.na(jdata$Est_min_avg_salary[i])){
+    if(jdata$Est_min_avg_salary[i] >= 150000){
+      jdata$Min_exp[i] = 4
     }
-    else if(jdata$Estimate_minimum_average_salary[i] >= 130000 &
-            jdata$Estimate_minimum_average_salary[i] <  150000){
-      jdata$Minimum_exp_years[i] = 3
+    else if(jdata$Est_min_avg_salary[i] >= 130000 &
+            jdata$Est_min_avg_salary[i] <  150000){
+      jdata$Min_exp[i] = 3
     }
-    else if (jdata$Estimate_minimum_average_salary[i] >= 100000 &
-             jdata$Estimate_minimum_average_salary[i] <  130000){
-      jdata$Minimum_exp_years[i] = 2
+    else if (jdata$Est_min_avg_salary[i] >= 100000 &
+             jdata$Est_min_avg_salary[i] <  130000){
+      jdata$Min_exp[i] = 2
     }
-    else{jdata$Minimum_exp_years[i] = 1}
+    else{jdata$Min_exp[i] = 1}
   } 
 }
 ```
@@ -398,14 +432,14 @@ Add variable names: Jobs density to show which city offers lots of position, whi
 
 ```{r}
 set.seed(2018)
-result = jdata$Estimate_minimum_average_salary[which.min(jdata$Estimate_minimum_average_salary)]
+result = jdata$Est_min_avg_salary[which.min(jdata$Est_min_avg_salary)]
 for (i in 1:length(jdata$City))
 if(count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] > mean(count(jdata$City)$freq)){ 
   jdata$Jobs_density[i] = "High"
-  jdata$City_Bonus[i] = round(rnorm(1, mean = result * 1.75, sd = 500),1) 
+  jdata$City_Bonus[i] = round(rnorm(1, mean = result * 1.2, sd = 300),1) 
 } else {
   jdata$Jobs_density[i] = "Low"
-  jdata$City_Bonus[i] = round(rnorm(1, mean = result* 1.25, sd = 500),1) 
+  jdata$City_Bonus[i] = round(rnorm(1, mean = result * 1.18, sd = 300),1) 
 }
 
 ```
@@ -434,13 +468,21 @@ for (i in 1:length(jdata$Position)){
 head(jdata,10)
 ```
 
+```{r}
+
+```
+
 Original model:
 
 ```{r}
-model1 = lm(Estimate_minimum_average_salary ~ Posi_Bonus, data = jdata)
-plot(jdata$Estimate_minimum_average_salary ~ jdata$Posi_Bonus
-, main = "Experience vs Years", xlab = "Years", ylab = "Salary")
-abline(model)
+par(mfrow = c(1,3))
+model1 = lm(Est_min_avg_salary ~ City_Bonus, data = jdata)
+plot(jdata$Est_min_avg_salary ~ jdata$City_Bonus, main = "Salary vs City Bonus", xlab = "City Bonus", ylab = "Salary")
+abline(model1)
+
+model2 = lm(Est_min_avg_salary ~ Posi_Bonus, data = jdata)
+plot(jdata$Est_min_avg_salary ~ jdata$Posi_Bonus, main = "Salary vs Position Bonus", xlab = "Position Bonus", ylab = "Salary")
+abline(model2)
 ```
 
 New model:
