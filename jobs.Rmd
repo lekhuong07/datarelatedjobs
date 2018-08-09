@@ -346,12 +346,10 @@ for (i in 1:length(jdata$Standing)){
 ```
 
 ```{r}
-Ez = jdata[which(jdata$Difficulty == "Easy"),]
-Ez
-Ex = jdata[which(jdata$Minimum_exp_years <=5),]
-Ex
-Re = jdata[which(jdata$Region == "North CA"),]
-Re
+Instruction:
+  First subset our data into small subset that satisfies only 1 agrument.
+  Compare the length of those 4 small subsets. 
+  Find the intersection subset between those 4 subsets that is the largest will be our result
 ```
 
 Our function will now base on Difficulty, Experience, Region, Best Language:
