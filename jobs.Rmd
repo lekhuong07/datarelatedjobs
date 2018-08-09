@@ -376,7 +376,7 @@ find_company = function(Difficulty, Exp, Region,Language){
 
 }
 
-find_company("Medium", 5, "South CA","SQL")
+find_company("Medium", 5, "South CA","R")
 ```
 
 Another way using subset find_company:
@@ -398,20 +398,11 @@ nex_r2 = pre_r2[which(pre_r2$Region == Region)]
 r2     = nex_r2[which(nex_r2$Preferred_lang2 == Language)]
 
 rbind(r1,r2)
-
-find_company("Easy", 2, "South CA","R")
-
+}
+find_company("Medium", 5, "South CA","R")
 ```
 
-<<<<<<< HEAD
 4 - Linear regression model to find our salary and check if it fit.
-=======
-
-Our function will now base on Difficulty, Experience, Region, Best Language:
-
-
-3 - Linear regression model to find our salary and check if it fit.
->>>>>>> ad0943cba8039b61f74fe84e1ed94903c29935f2
 
 Data transformation:
 
@@ -499,4 +490,17 @@ Write a function to predict the salary base on Jobs_density, Position, Standing.
 
 
 ```{r}
+
 ```
+
+Report:
+Introduction: What is this project about? Why do we do this? 
+Body: Talk about all of the graphs we have.
+- What's the graph about.
+- Why do we make this graph
+- Interesting number, reasons?
+Talk about those functions we made
+
+Conclusion: Talk about the benefits of making this project.
+
+
