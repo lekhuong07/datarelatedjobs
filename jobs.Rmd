@@ -399,7 +399,7 @@ e2 = b[which(b$Region == "North CA"),]
 f2 = e2[which(e2$Difficulty == "Easy"),]
 r2 = data.frame(f2[which(f2$Preferred_lang2 == "R"),])
 
-rbind.data.frame(r1,r2)
+rbind.data.frame(r1,r2)[2]
 ```
 
 ```{r}
