@@ -48,9 +48,24 @@ head(jdata,10)
 
 1. Comparing between companies in the North and the South of California (using side-by-side histogram):
 
+- Number of Cities.
 - Number of companies in North vs South
 - Average minimum experience. 
 - Average salary in North vs South
+
+Set up number of cities.
+
+```{r}
+ct_City = count(jdata$City)
+topCity = ct_City[order(ct_City$freq, decreasing = T),]
+
+tCitydf = data.frame(City_Name =  c("S.Francisco" , "L.Angeles" , "S.Jose" , "M.View" , "S.Diego", "S.Mateo" , "P.Alto", "S.Monica", "Sunnyvale" , "RedwoodCity"),
+                     NumberofPosition = c(topCity$freq[1:10]))
+
+city_plot = ggplot(data = tCitydf, aes(x = City_Name, y = NumberofPosition)) + 
+    geom_bar(stat = "identity", position=position_dodge()) 
+city_plot
+```
 
 Set up 2 subsets for North and South:
 
@@ -405,7 +420,6 @@ find_company("Medium", 5, "South CA","R")
 4 - Linear regression model to find our salary and check if it fit.
 
 Data transformation:
-
 Minimum experience
 
 ```{r}
@@ -435,20 +449,14 @@ result = jdata$Est_min_avg_salary[which.min(jdata$Est_min_avg_salary)]
 for (i in 1:length(jdata$City))
 if(count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] > mean(count(jdata$City)$freq)){ 
   jdata$Jobs_density[i] = "High"
-  jdata$City_Bonus[i] = round(rnorm(1, mean = result * 1.2, sd = 300),1) 
+  jdata$City_Bonus[i] = round(rnorm(1, mean = result * 1.5, sd = 1500),1) 
 } else {
   jdata$Jobs_density[i] = "Low"
-  jdata$City_Bonus[i] = round(rnorm(1, mean = result * 1.18, sd = 300),1) 
+  jdata$City_Bonus[i] = round(rnorm(1, mean = result * 1.45, sd = 1500),1) 
 }
-
 ```
 
 Set up bonuses for salary:
-```{r}
-count(str_detect(jdata$Position, pattern = "Scientist"))
-count(str_detect(jdata$Position, pattern = "Analyst"))
-count(str_detect(jdata$Position, pattern = "Engineer"))
-```
 
 According to job function, we can divide position into 3 functions (Engineer, Scientist, Analyst). Assume bonuses follow a normal distribution that has mean = 7000 - 6000 - 5000 and sd = 500
 
@@ -456,15 +464,44 @@ According to job function, we can divide position into 3 functions (Engineer, Sc
 set.seed(2018)
 for (i in 1:length(jdata$Position)){
   if(str_detect(jdata$Position[i], pattern = "Engineer")){
-    jdata$Posi_Bonus[i] = round(rnorm(1, mean = 7000, sd = 500),1)
+    jdata$Posi_Bonus[i] = round(rnorm(1, mean = 25000, sd = 1000),1)
   }  else if (str_detect(jdata$Position[i], pattern = "Scientist")){
-    jdata$Posi_Bonus[i] = round(rnorm(1, mean = 5000, sd = 500),1)
+    jdata$Posi_Bonus[i] = round(rnorm(1, mean = 22000, sd = 1000),1)
   }  else if (str_detect(jdata$Position[i], pattern = "Analyst")){
-    jdata$Posi_Bonus[i] = round(rnorm(1, mean = 3000, sd = 500),1)
-  } 
+    jdata$Posi_Bonus[i] = round(rnorm(1, mean = 15000, sd = 1000),1)
+  } else {
+    jdata$Posi_Bonus[i] = round(rnorm(1, mean = 10000, sd = 1000),1)
+  }
 }
-#as.numeric(jdata$Posi_Bonus)
-head(jdata,10)
+
+```
+
+Finding bonuses for with the year of experience:
+
+```{r}
+calc_salary = na.omit(jdata$Est_min_avg_salary)
+avg_salary = mean(calc_salary[which(calc_salary >= 100000)])
+salaryvsyear = lm(Est_min_avg_salary ~ Min_exp, data = jdata)
+summary(salaryvsyear)
+#Since the p-value for this model is very small it looks like the Min_exp is significant.
+exp_multiplier = summary(salaryvsyear)$coef[2,1]
+```
+
+Set up bonus for Bonuses with years experience
+
+```{r}
+set.seed(2018)
+for (i in 1:length(jdata$Min_exp)){
+  if(is.na(jdata$Est_min_avg_salary[i])){
+    jdata$Exp_Bonus[i] = round(exp_multiplier * jdata$Min_exp[i] / mean(jdata$Min_exp) ,1) 
+  }  else if(!is.na(jdata$Est_min_avg_salary[i]) & jdata$Est_min_avg_salary[i] >= 100000){
+    jdata$Exp_Bonus[i] = round(exp_multiplier * jdata$Min_exp[i] ,1) 
+  }  else {
+    jdata$Exp_Bonus[i] = round(exp_multiplier * jdata$Min_exp[i] /2 ,1) 
+  }
+}
+head(jdata,50)
+
 ```
 
 Original model:
@@ -478,22 +515,27 @@ abline(model1)
 model2 = lm(Est_min_avg_salary ~ Posi_Bonus, data = jdata)
 plot(jdata$Est_min_avg_salary ~ jdata$Posi_Bonus, main = "Salary vs Position Bonus", xlab = "Position Bonus", ylab = "Salary")
 abline(model2)
+
+model3 = lm(Est_min_avg_salary ~ Exp_Bonus, data = jdata)
+plot(jdata$Est_min_avg_salary ~ jdata$Exp_Bonus, main = "Salary vs Experience Bonus", xlab = "Experience Bonus", ylab = "Salary")
+abline(model3)
 ```
 
 New model:
 
-```{r}
-
+```{r, warning = FALSE}
+fit_model = lm(Est_min_avg_salary ~ Min_exp + Est_min_avg_salary + Exp_Bonus + City_Bonus + Posi_Bonus, data = jdata)
+summary(fit_model)
 ```
 
-Write a function to predict the salary base on Jobs_density, Position, Standing. Simulate it around 1000 times to make sure our function correct
-
+Logistic Regression model:
 
 ```{r}
 
 ```
 
 Report:
+<<<<<<< HEAD
 Introduction: What is this project about? Why do we do this?
 
 Introduction: In this project, we perform data analysis using R language on job demand across data related field in California State. The reason why we did this project is to help people better understand the requirements for data related job and information on job demand across data related - field in California State.
@@ -501,9 +543,10 @@ Introduction: In this project, we perform data analysis using R language on job 
 From this project,we created our own data set using Excel and incorporate the variables we want using glassdoor, Indeed and Linkedin. Moreover, we subsetted data set to create various graphs and function. The graphs are created for visualization and the functions are created for searching. The github is used to create a collaborative repository to store our work files that are created in R markdown. We will talk more in detail about the functions and graphs we created through the use of R language and R markdown file. 
 
 
+=======
+Introduction: What is this project about? Why do we do this? 
+
 Body: Talk about all of the graphs we have.
-
-
 - What's the graph about.
 - Why do we make this graph
 - Interesting number, reasons?
