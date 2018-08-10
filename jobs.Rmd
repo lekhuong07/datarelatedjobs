@@ -535,16 +535,8 @@ Logistic Regression model:
 ```
 
 Report:
-Introduction: What is this project about? Why do we do this?
-
-Introduction: In this project, we perform data analysis using R language on job demand across data related field in California State. The reason why we did this project is to help people better understand the requirements for data related job and information  on job demand across data related - field in California State.
-
-From this project,we created our own data set using Excel and incorporate the variables we want using glassdoor, Indeed and Linkedin. Moreover, we subsetted data set to create various graphs and function. The graphs are created for visualization and the functions are created for searching. The github is used to create a collaborative repository to store our work files that are created in R markdown. We will talk more in detail about the functions and graphs we created through the use of R language and R markdown file. 
-
-
+Introduction: What is this project about? Why do we do this? 
 Body: Talk about all of the graphs we have.
-
-
 - What's the graph about.
 - Why do we make this graph
 - Interesting number, reasons?
