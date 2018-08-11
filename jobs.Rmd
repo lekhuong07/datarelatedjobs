@@ -213,7 +213,7 @@ This graph shows the frequency of each factors in the standing variable of jdata
 
 Write function to count and put them in decreasing order:
 
-Intputs: 2 columns that needs to be counted
+Intputs: 2 columns of language variables that needs to be counted ( North vs South) and Numbers of different language.
 Output: Dataframe in order of your choice (decreasing/ increasing)
 
 ```{r}
@@ -272,8 +272,8 @@ count_order = function(col1, col2, order, top){
   return(res[1:top,1:2])
 }
 
-
 ```
+
 
 Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
 
@@ -299,7 +299,7 @@ plotthird = ggplot(data = thirddf, aes(x = Factor, y = Number, fill = Region)) +
 plotthird
 ```
 
-The graph shows the frequency of top 5 most demanding language in California state. By calculating each language frequency, we conclude that Java, Python,R,SOL and C are top 5 most demanding language in California State. The frequency of each language is  subsetted by the north vs south region in California State and is indicated with color blue and red in the graph. The numbers on top of each bar indicate the frequency of different Language.
+The graph shows the frequency of top 5 most demanding language in north vs south California state. By calculating each language frequency, we conclude that Java, Python,R,SOL and Tableau are top 5 most demanding language in North California State, where as Java, Python,R,SOL and c/c++ are most demanding language in South California State. Each language is subsetted by the north and south region in California State. The numbers on top of each bar indicate the frequency of that Language.
 
 Calculate the frequency of different Language in different way to double check:
 
