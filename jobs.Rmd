@@ -209,6 +209,8 @@ plotsecond = ggplot(data = secondtdf, aes(x = Factor, y = Number, fill = Region)
 plotsecond
 ```
 
+This graph shows the frequency of each factors in the standing variable of jdata set. Each factor is subsetted by region, which is north vs south in California state. The indepedent variables are bachelor degree, master degree and Ph.D, and the dependent variables is the frequency of the indepedent variables. The numbers on top of each bar indicates the frequency of that factor. The color indicates region difference.
+
 Write function to count and put them in decreasing order:
 
 Intputs: 2 columns that needs to be counted
@@ -274,6 +276,7 @@ count_order = function(col1, col2, order, top){
 ```
 
 Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
+
 Dataframe for counting Language:
 
 ```{r}
@@ -296,7 +299,9 @@ plotthird = ggplot(data = thirddf, aes(x = Factor, y = Number, fill = Region)) +
 plotthird
 ```
 
-Calculate Language in different way to double check:
+The graph shows the frequency of top 5 most demanding language in California state. By calculating each language frequency, we conclude that Java, Python,R,SOL and C are top 5 most demanding language in California State. The frequency of each language is  subsetted by the north vs south region in California State and is indicated with color blue and red in the graph. The numbers on top of each bar indicate the frequency of different Language.
+
+Calculate the frequency of different Language in different way to double check:
 
 ```{r}
 n_cpp_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^C\\++$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "C\\++$"))
@@ -384,7 +389,7 @@ for (i in 1:length(jdata$Standing)){
 }
 ```
 
-Function find_company using intersect and union subsets.
+Function find_company using intersect and union subsets. The input of the function will be Difficulty, Minimum years of experience, region and language in Jdata set. The output will be the list of companies name that satisfied the arguments.
 
 ```{r}
 find_company = function(Difficulty, Exp, Region,Language){
