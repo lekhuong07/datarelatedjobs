@@ -4,9 +4,11 @@ author: "Khuong Le & Shiyong Liu"
 date: July 23, 2018
 ---
 
-Introduction: In this project, we performed data analysis using R language on job demand across data related field in California State. The reason why we did this project is to help people better understand the requirement and information on data - related job.
+Introduction: In this project, we performed data analysis using R language on job demand across data related field to help people better understand the basic requirement and information on data - related jobs in California State. 
 
-From this project, we created our own data set using Excel and incorporated the several variables we needed using glassdoor, Indeed and Linkedin. Furthermoer, we subsetted our data set to create various graphs and function. The graphs are created for visualization and the functions are created for searching. The github is used to create a collaborative repository in order to store the work files that are created in R markdown. In this project, we will get more in depth on the functions and graphs that are created in R markdown file.
+We used excel to create the data set that will later be imported in r markdown file for the analysis. Moreover, we targetted job demanding social networkoing sites such as glassdoor, Indeed and Linkedin to help creating the variables for our data set. 
+
+During the analysis, the graphs are created for visualization and  functions are created for searching. The github is used to help creating a collaborative repository to store the work files that are created in R markdown.
 
 
 Load different packages that will use in this model:
