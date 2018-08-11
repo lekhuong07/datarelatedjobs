@@ -541,7 +541,7 @@ Logistic Regression model:
 
 Conclusion:
 
-By completing this project, we are able to understand more in depth about the basic requirements and information about data - related job in the state of California. Judging from the result of analysis, graphs were created to help visualizing the behavior of variables in the data set, and functions were created to help getting the  outputs that matched the conditional inputs.  
+By completing this project, we are able to understand more in depth about the basic requirements and information about data - related job in the state of California, in that we are able to create  graphs to visualize the behavior of different variables from the data set and write out functions to help obtaining the outputs that would match the conditional inputs.  
 
 
 
