@@ -530,8 +530,32 @@ summary(fit_model)
 
 Logistic Regression model:
 
+Set up logistic model. 
 ```{r}
+for(i in 1:length(jdata$Region)){
+  if(jdata$Region[i] == "North CA"){
+    jdata$Region_Logic[i] = 1
+  } else { 
+    jdata$Region_Logic[i] = 0
+  }
+}
+head(jdata,50)
 
+```
+
+The model:
+```{r}
+fit_glm = glm(Region_Logic ~ Est_min_avg_salary, data = jdata, family = binomial(link = "logit"))
+fit_lm  = 
+
+plot(Region_Logic ~ Est_min_avg_salary, data = jdata, pch = 20, ylab = "Estimated Probability",   main = "Ordinary vs Logistic Regression")
+grid()
+
+abline(fit_lm, col = "darkorange")
+curve(predict(fit_glm, data.frame(Est_min_avg_salary), type = "response"), 
+      add = TRUE, col = "dodgerblue", lty = 2)
+legend("topleft", c("Ordinary", "Logistic", "Data"), lty = c(1, 2, 0), 
+       pch = c(NA, NA, 20), lwd = 2, col = c("darkorange", "dodgerblue", "black"))
 ```
 
 Report:
