@@ -4,6 +4,13 @@ author: "Khuong Le & Shiyong Liu"
 date: July 23, 2018
 ---
 
+Introduction: In this project, we performed data analysis using R language on job demand across data related field to help people better understand the basic requirement and information on data - related jobs in California State. 
+
+We used excel to create the data set that will later be imported in r markdown file for the analysis. Moreover, we targetted job demanding social networkoing sites such as glassdoor, Indeed and Linkedin to help creating the variables for our data set. 
+
+During the analysis, the graphs are created for visualization and  functions are created for searching. The github is used to help creating a collaborative repository to store the work files that are created in R markdown.
+
+
 Load different packages that will use in this model:
 
 ```{r}
@@ -202,9 +209,11 @@ plotsecond = ggplot(data = secondtdf, aes(x = Factor, y = Number, fill = Region)
 plotsecond
 ```
 
+This graph shows the frequency of each factors in the standing variable of jdata set. Each factor is subsetted by region, which is north vs south in California state. The indepedent variables are bachelor degree, master degree and Ph.D, and the dependent variables is the frequency of the indepedent variables. The numbers on top of each bar indicates the frequency of that factor. The color indicates region difference.
+
 Write function to count and put them in decreasing order:
 
-Intputs: 2 columns that needs to be counted
+Intputs: 2 columns of language variables that needs to be counted ( North vs South) and Numbers of different language.
 Output: Dataframe in order of your choice (decreasing/ increasing)
 
 ```{r}
@@ -263,10 +272,11 @@ count_order = function(col1, col2, order, top){
   return(res[1:top,1:2])
 }
 
-
 ```
 
+
 Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
+
 Dataframe for counting Language:
 
 ```{r}
@@ -289,7 +299,9 @@ plotthird = ggplot(data = thirddf, aes(x = Factor, y = Number, fill = Region)) +
 plotthird
 ```
 
-Calculate Language in different way to double check:
+The graph shows the frequency of top 5 most demanding language in north vs south California state. By calculating each language frequency, we conclude that Java, Python,R,SOL and Tableau are top 5 most demanding language in North California State, where as Java, Python,R,SOL and c/c++ are most demanding language in South California State. Each language is subsetted by the north and south region in California State. The numbers on top of each bar indicate the frequency of that Language.
+
+Calculate the frequency of different Language in different way to double check:
 
 ```{r}
 n_cpp_North = length(str_subset(North_sub_st$Preferred_lang1, pattern = "^C\\++$")) +length(str_subset(North_sub_st$Preferred_lang2, pattern = "C\\++$"))
@@ -377,7 +389,7 @@ for (i in 1:length(jdata$Standing)){
 }
 ```
 
-Function find_company using intersect and union subsets.
+Function find_company using intersect and union subsets. The input of the function will be Difficulty, Minimum years of experience, region and language in Jdata set. The output will be the list of companies name that satisfied the arguments.
 
 ```{r}
 find_company = function(Difficulty, Exp, Region,Language){
@@ -558,14 +570,15 @@ legend("topleft", c("Ordinary", "Logistic", "Data"), lty = c(1, 2, 0),
        pch = c(NA, NA, 20), lwd = 2, col = c("darkorange", "dodgerblue", "black"))
 ```
 
-Report:
-Introduction: What is this project about? Why do we do this? 
+Conclusion:
+
+By completing this project, we are able to understand more in depth about the basic requirements and information about data - related job in the state of California, in that we are able to create  graphs to visualize the behavior of different variables from the data set and write out functions to help obtaining the outputs that would match the conditional inputs.  
+
+
+
 Body: Talk about all of the graphs we have.
 - What's the graph about.
 - Why do we make this graph
 - Interesting number, reasons?
 Talk about those functions we made
-
-Conclusion: Talk about the benefits of making this project.
-
 
