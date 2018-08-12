@@ -518,6 +518,7 @@ head(jdata,50)
 
 Original model:
 
+Compare between 
 ```{r}
 par(mfrow = c(1,3))
 model1 = lm(Est_min_avg_salary ~ City_Bonus, data = jdata)
@@ -536,9 +537,38 @@ abline(model3)
 New model:
 
 ```{r, warning = FALSE}
-fit_model = lm(Est_min_avg_salary ~ Min_exp + Est_min_avg_salary + Exp_Bonus + City_Bonus + Posi_Bonus, data = jdata)
+fit_model = lm(Est_min_avg_salary ~ Exp_Bonus + City_Bonus + Posi_Bonus, data = jdata)
 summary(fit_model)
 ```
+
+For the model of Est_min_avg_salary and the bonuses, beside City_Bonus is 0.2611, the order value is very small
+Using backward aic to find out the selected model:
+
+```{r}
+full_model = lm(Est_min_avg_salary ~ Min_exp + Exp_Bonus + City_Bonus + Posi_Bonus, data = jdata)
+sele_model = step(full_model, direction = "backward", trace = 0)
+sele_model
+
+```
+
+From the select model, it looks like City Bonus is not really great for the model.
+
+```{r}
+for(i in 1:length(jdata$Est_min_avg_salary)){
+  jdata$New_min_avg_salary[i] = jdata$City_Bonus[i] + jdata$Posi_Bonus[i] + jdata$Exp_Bonus[i]
+}
+
+```
+
+Compare new salary and estimate one.
+
+```{r}
+model_compare = lm(Est_min_avg_salary ~ New_min_avg_salary, data = jdata)
+plot(jdata$Est_min_avg_salary, jdata$New_min_avg_salary)
+abline(model_compare)
+```
+
+It looks like the from the model, the abline is not following what the data has. 
 
 Logistic Regression model:
 
@@ -556,18 +586,18 @@ head(jdata,50)
 ```
 
 The model:
+```{r, warning = FALSE}
+fit_glm = glm(Region_Logic ~ Est_min_avg_salary, data = jdata, family = binomial)
+fit_lm  =  lm(Region_Logic ~ Est_min_avg_salary, data = jdata)
+
+qplot(jdata$Est_min_avg_salary, jdata$Region_Logic) + stat_smooth()
+```
+
+Find interactions between Region_Logic and the bonuses.
+
 ```{r}
-fit_glm = glm(Region_Logic ~ Est_min_avg_salary, data = jdata, family = binomial(link = "logit"))
-fit_lm  = 
-
-plot(Region_Logic ~ Est_min_avg_salary, data = jdata, pch = 20, ylab = "Estimated Probability",   main = "Ordinary vs Logistic Regression")
-grid()
-
-abline(fit_lm, col = "darkorange")
-curve(predict(fit_glm, data.frame(Est_min_avg_salary), type = "response"), 
-      add = TRUE, col = "dodgerblue", lty = 2)
-legend("topleft", c("Ordinary", "Logistic", "Data"), lty = c(1, 2, 0), 
-       pch = c(NA, NA, 20), lwd = 2, col = c("darkorange", "dodgerblue", "black"))
+reg_interaction = glm(Region_Logic ~ Est_min_avg_salary + City_Bonus + Posi_Bonus + Exp_Bonus + Est_min_avg_salary:City_Bonus, family = binomial, data = jdata)
+summary(reg_interaction) 
 ```
 
 Conclusion:
