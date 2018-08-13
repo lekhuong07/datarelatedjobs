@@ -71,8 +71,9 @@ tCitydf = data.frame(City_Name =  c("S.Francisco" , "L.Angeles" , "S.Jose" , "M.
 
 city_plot = ggplot(data = tCitydf, aes(x = City_Name, y = NumberofPosition)) + 
     geom_bar(stat = "identity", position=position_dodge()) 
+jpeg('city_plot.jpg')
+plot(city_plot)
 city_plot
-
 ```
 
 Set up 2 subsets for North and South:
@@ -144,8 +145,8 @@ plotfirst = ggplot(data = firstdf, aes(x = Factor, y = Number, fill = Region)) +
     geom_bar(stat = "identity", position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-#jpeg('plotfirst.jpg')
-#plot(plotfirst)
+jpeg('plotfirst.jpg')
+plot(plotfirst)
 plotfirst
 
 ```
@@ -205,8 +206,8 @@ plotsecond = ggplot(data = secondtdf, aes(x = Factor, y = Number, fill = Region)
     geom_bar(stat = "identity", position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-#jpeg('plotsecond.jpg')
-#plot(plotsecond)
+jpeg('plotsecond.jpg')
+plot(plotsecond)
 plotsecond
 ```
 
@@ -296,8 +297,8 @@ plotthird = ggplot(data = thirddf, aes(x = Factor, y = Number, fill = Region)) +
     geom_bar(stat = "identity", position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-#jpeg('plotsecond.jpg')
-#plot(plotsecond)
+jpeg('plotsecond.jpg')
+plot(plotsecond)
 plotthird
 ```
 
@@ -355,8 +356,8 @@ plotforth = ggplot(data = forthdf, aes(x = Factor, y = Number, fill = Region)) +
     geom_bar(stat = "identity", position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-#jpeg('plotsecond.jpg')
-#plot(plotsecond)
+jpeg('plotsecond.jpg')
+plot(plotsecond)
 plotforth
 
 
