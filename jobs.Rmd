@@ -213,8 +213,7 @@ plotsecond
 ```
 
 
-
-This graph shows the frequency of each factors in the standing variable of jdata set. Each factor is subsetted by region, which is north vs south in California state. The indepedent variables are bachelor degree, master degree and Ph.D, and the dependent variables is the frequency of the indepedent variables. The numbers on top of each bar indicates the frequency of that factor. The color indicates region difference.
+This graph shows the frequency of each factors in the standing variable of jdata set. Each factor is subsetted by region, which is north vs south in California state. The indepedent variables are bachelor degree, master degree and Ph.D.The numbers on top of each bar indicates the frequency of that factor. The color indicates region difference.
 
 Write function to count and put them in decreasing order:
 
@@ -495,6 +494,7 @@ Plot_1 = ggplot(data = P_data_fr, aes(x = Factor, y = Number, fill = Region)) +
 Plot_1
 ```
 
+This histogram shows the comparison between the number of data engineer and data scientist in north and south of California. The independent variables are data engineer and data scientist, and the number on top of them represent their frequency.
 
 Top 3 language for Data Scientist vs Data Engineer 
 
@@ -551,6 +551,8 @@ Plot_position
 
 ```
 
+This histogram shows the number of top 3 most used language in the position of data scientist and data engineer. The histogram is subsetted by postion of data scientist and data engineer, and the number on top of each bars represents the frequency of different indepedent variables.  
+
 Best estimated minimum salary for Data scientist and Data Engineer
 
 Average Salary
@@ -583,6 +585,8 @@ Plot_Salary = ggplot(data = sala_data_frame, aes(x = Factor, y = Number, fill = 
 Plot_Salary
                              
 ```
+
+This histogram shows the comparison between estimated minimum yearly salary (in thousands) for Data scientist and Data Engineer in California. We subsetted the histogram by postion of data scientist and data engineer in the data set.The number on top of each bars represents the frequency of different independent variables. 
 
 Finding the top 3 cities that have both most number of data Engineers and data Scientists:
 
@@ -640,6 +644,8 @@ Plot_3
                 
 ```
 
+This histogram shows the comparison of number of Data Engineer and Data Scientist in San Francisco, Santa Monica and Los Angeles of California. In here, we subsetted the histogram by City of San Francisco,Santa Monica and Los Angeles and
+made data engineer and data scientist as two of the independent variables.The number on top of each bars represents the frequency of different indepedent variables. 
 
 5 - Linear regression model to find our salary and check if it fit.
 
@@ -811,8 +817,6 @@ Find interactions between Region_Logic and the bonuses.
 reg_interaction = glm(Region_Logic ~ Est_min_avg_salary + City_Bonus + Posi_Bonus + Exp_Bonus + Est_min_avg_salary:City_Bonus, family = binomial, data = jdata)
 summary(reg_interaction) 
 ```
-
-
 
 
 Conclusion:
