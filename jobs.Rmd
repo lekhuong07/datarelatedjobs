@@ -608,21 +608,33 @@ reg_interaction = glm(Region_Logic ~ Est_min_avg_salary + City_Bonus + Posi_Bonu
 summary(reg_interaction) 
 ```
 
-Comparing between numbers of data engineers and data scientists in the North and the South of California (using side-by-side histogram):
+Finding total number of Data Engineers and Data Scientists in North and South of California state using String R:
 
 ```{r}
 major = count(jdata$Position)
-
 count(North_sub_st$Position)
 
 n_eng_north = length(str_subset(North_sub_st$Position, pattern = "^Data Engineer"))+length(str_subset(North_sub_st$Position, pattern = "Data Engineer$")) - length(str_subset(North_sub_st$Position, pattern = "^Data Engineer$"))
 
+n_eng_north
+
 n_eng_south = length(str_subset(South_sub_st$Position, pattern = "^Data Engineer"))+length(str_subset(South_sub_st$Position, pattern = "Data Engineer$")) - length(str_subset(South_sub_st$Position, pattern = "^Data Engineer$"))
+
+n_eng_south
 
 n_sci_north =  length(str_subset(North_sub_st$Position, pattern = "^Data Scientist"))+length(str_subset(North_sub_st$Position, pattern = "Data Scientist$")) - length(str_subset(North_sub_st$Position, pattern = "^Data Scientist$"))
 
+n_sci_north
+
 n_sci_south = length(str_subset(South_sub_st$Position, pattern = "^Data Scientist"))+length(str_subset(South_sub_st$Position, pattern = "Data Scientist$")) - length(str_subset(South_sub_st$Position, pattern = "^Data Scientist$"))
 
+n_sci_south
+```
+
+
+Comparing between numbers of data engineers and data scientists in the North and the South of California (using side-by-side histogram):
+
+```{r}
 P_data_fr = data.frame(Region = c("North","South","North","South"),
   Number = c(n_eng_north,n_eng_south,n_sci_north,n_sci_south),
   Factor = rep(c("Data Engineer","Data Scientist"),each = 2)
@@ -636,6 +648,8 @@ Plot_1 = ggplot(data = P_data_fr, aes(x = Factor, y = Number, fill = Region)) +
 #plot(plotsecond)
 Plot_1
 ```
+
+
 
 
 Conclusion:
