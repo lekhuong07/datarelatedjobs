@@ -801,8 +801,8 @@ plotthird = ggplot(data = thirddf, aes(x = Factor, y = Number, fill = Region)) +
     geom_bar(stat = &quot;identity&quot;, position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = &quot;darkred&quot;, size = 3)
 
-jpeg('plotsecond.jpg')
-plot(plotsecond)
+jpeg('plotthird.jpg')
+plot(plotthird)
 plotthird</code></pre>
 <p>The graph shows the frequency of top 5 most demanding language in north vs south California state. By calculating each language frequency, we conclude that Java, Python,R,SOL and Tableau are top 5 most demanding language in North California State, where as Java, Python,R,SOL and c/c++ are most demanding language in South California State. Each language is subsetted by the north and south region in California State. The numbers on top of each bar indicate the frequency of that Language.</p>
 <p>Calculate the frequency of different Language in different way to double check:</p>
@@ -874,8 +874,8 @@ plotforth = ggplot(data = forthdf, aes(x = Factor, y = Number, fill = Region)) +
     geom_bar(stat = &quot;identity&quot;, position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = &quot;darkred&quot;, size = 3)
 
-jpeg('plotsecond.jpg')
-plot(plotsecond)
+jpeg('plotforth.jpg')
+plot(plotforth)
 plotforth</code></pre>
 <p>3 - Write function to find out suitable companies: “find_company” that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments</p>
 <p>Let’s just use the top 20 preferred language:</p>

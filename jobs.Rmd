@@ -297,8 +297,8 @@ plotthird = ggplot(data = thirddf, aes(x = Factor, y = Number, fill = Region)) +
     geom_bar(stat = "identity", position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-jpeg('plotsecond.jpg')
-plot(plotsecond)
+jpeg('plotthird.jpg')
+plot(plotthird)
 plotthird
 ```
 
@@ -356,8 +356,8 @@ plotforth = ggplot(data = forthdf, aes(x = Factor, y = Number, fill = Region)) +
     geom_bar(stat = "identity", position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-jpeg('plotsecond.jpg')
-plot(plotsecond)
+jpeg('plotforth.jpg')
+plot(plotforth)
 plotforth
 
 
