@@ -138,7 +138,7 @@ Setting up the dataframe for histogram:
 ```{r}
 firstdf = data.frame(
           Region = rep(c("North", "South"), each = 3),
-          Factor = rep(c("Average experience (in months)", "Average salary (in thousands)","Number Companies")),
+          Factor = rep(c("Average experience (in m)", "Average salary (in k)","Number Companies")),
           Number = c(avg_exp_N, North_Est_min_salary, sum(n_companies_north),
                      avg_exp_S, South_Est_min_salary, sum(n_companies_south)))
 
@@ -199,7 +199,7 @@ Create dataframe to plot out our histogram:
 ```{r}
 secondtdf = data.frame(
           Region = rep(c("North", "South"), each = 3),
-          Factor = rep(c("Bachelor degree", "Master degree","PH.D")),
+          Factor = rep(c("Bachelor degree", "Master degree","PH.D degree")),
           Number = c(n_bach_N, n_master_N, n_PH.D_N,
                      n_bach_S, n_master_S, n_PH.D_S))
 
@@ -364,6 +364,22 @@ plotforth
 
 ```
 
+Combining 1 and 2 together:
+
+```{r}
+combinedf = data.frame(
+          Region = rep(c("North", "South"), each = 6),
+          Factor = c("XP_N(m)", "SalN(k)", "#CompN", "#Ba_N", "#Ma_N", "#PHD_N", "XP_S(m)", "SalS(k)", "#CompS", "#Ba_S", "#Ma_S", "#PHD_S"),
+          Number = c(avg_exp_N, North_Est_min_salary, sum(n_companies_north), n_bach_N, n_master_N, n_PH.D_N, avg_exp_S, South_Est_min_salary, sum(n_companies_south), n_bach_S, n_master_S, n_PH.D_S))
+
+
+plotcombine = ggplot(data = combinedf, aes(x = Factor, y = Number, fill = Region)) + 
+    geom_bar(stat = "identity", position=position_dodge()) +  
+    geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
+jpeg('plotcombine.jpg')
+plot(plotcombine)
+plotcombine
+```
 
 3 - Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
 
