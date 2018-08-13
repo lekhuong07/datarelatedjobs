@@ -69,12 +69,12 @@ topCity = ct_City[order(ct_City$freq, decreasing = T),]
 tCitydf = data.frame(City_Name =  c("S.Francisco" , "L.Angeles" , "S.Jose" , "M.View" , "S.Diego", "S.Mateo" , "P.Alto", "S.Monica", "Sunnyvale" , "RedwoodCity"),
                      NumberofPosition = c(topCity$freq[1:10]))
 
-city_plot = ggplot(data = tCitydf, aes(x = City_Name, y = NumberofPosition)) + 
+city_plotg = ggplot(data = tCitydf, aes(x = City_Name, y = NumberofPosition)) + 
     geom_bar(stat = "identity", position=position_dodge()) +
     geom_text(aes(label = NumberofPosition), position = position_dodge(0.95), vjust= 1.5, color = "white", size = 3)
-jpeg('city_plot.jpg')
-plot(city_plot)
-city_plot
+jpeg('city_plotg.jpg')
+plot(city_plotg)
+city_plotg
 ```
 
 Set up 2 subsets for North and South:

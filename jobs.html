@@ -549,7 +549,8 @@ tCitydf = data.frame(City_Name =  c(&quot;S.Francisco&quot; , &quot;L.Angeles&qu
                      NumberofPosition = c(topCity$freq[1:10]))
 
 city_plot = ggplot(data = tCitydf, aes(x = City_Name, y = NumberofPosition)) + 
-    geom_bar(stat = &quot;identity&quot;, position=position_dodge()) 
+    geom_bar(stat = &quot;identity&quot;, position=position_dodge()) +
+    geom_text(aes(label = NumberofPosition), position = position_dodge(0.95), vjust= 1.5, color = &quot;white&quot;, size = 3)
 jpeg('city_plot.jpg')
 plot(city_plot)
 city_plot</code></pre>
