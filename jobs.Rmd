@@ -436,6 +436,46 @@ Base on jdata.
 - Best est_min_avg salary for each
 - City that offer the most Data Scientist position vs Data Engineer.
 
+Finding total number of Data Engineers and Data Scientists in North and South of California state using String R:
+
+```{r}
+major = count(jdata$Position)
+count(North_sub_st$Position)
+
+n_eng_north = length(str_subset(North_sub_st$Position, pattern = "^Data Engineer"))+length(str_subset(North_sub_st$Position, pattern = "Data Engineer$")) - length(str_subset(North_sub_st$Position, pattern = "^Data Engineer$"))
+
+n_eng_north
+
+n_eng_south = length(str_subset(South_sub_st$Position, pattern = "^Data Engineer"))+length(str_subset(South_sub_st$Position, pattern = "Data Engineer$")) - length(str_subset(South_sub_st$Position, pattern = "^Data Engineer$"))
+
+n_eng_south
+
+n_sci_north =  length(str_subset(North_sub_st$Position, pattern = "^Data Scientist"))+length(str_subset(North_sub_st$Position, pattern = "Data Scientist$")) - length(str_subset(North_sub_st$Position, pattern = "^Data Scientist$"))
+
+n_sci_north
+
+n_sci_south = length(str_subset(South_sub_st$Position, pattern = "^Data Scientist"))+length(str_subset(South_sub_st$Position, pattern = "Data Scientist$")) - length(str_subset(South_sub_st$Position, pattern = "^Data Scientist$"))
+
+n_sci_south
+```
+
+
+Comparing between numbers of data engineers and data scientists in the North and the South of California (using side-by-side histogram):
+
+```{r}
+P_data_fr = data.frame(Region = c("North","South","North","South"),
+  Number = c(n_eng_north,n_eng_south,n_sci_north,n_sci_south),
+  Factor = rep(c("Data Engineer","Data Scientist"),each = 2)
+)
+
+Plot_1 = ggplot(data = P_data_fr, aes(x = Factor, y = Number, fill = Region)) + 
+    geom_bar(stat = "identity", position=position_dodge()) +  
+    geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
+
+#jpeg('plotsecond.jpg')
+#plot(plotsecond)
+Plot_1
+```
 
 5 - Linear regression model to find our salary and check if it fit.
 
@@ -606,47 +646,6 @@ Find interactions between Region_Logic and the bonuses.
 ```{r}
 reg_interaction = glm(Region_Logic ~ Est_min_avg_salary + City_Bonus + Posi_Bonus + Exp_Bonus + Est_min_avg_salary:City_Bonus, family = binomial, data = jdata)
 summary(reg_interaction) 
-```
-
-Finding total number of Data Engineers and Data Scientists in North and South of California state using String R:
-
-```{r}
-major = count(jdata$Position)
-count(North_sub_st$Position)
-
-n_eng_north = length(str_subset(North_sub_st$Position, pattern = "^Data Engineer"))+length(str_subset(North_sub_st$Position, pattern = "Data Engineer$")) - length(str_subset(North_sub_st$Position, pattern = "^Data Engineer$"))
-
-n_eng_north
-
-n_eng_south = length(str_subset(South_sub_st$Position, pattern = "^Data Engineer"))+length(str_subset(South_sub_st$Position, pattern = "Data Engineer$")) - length(str_subset(South_sub_st$Position, pattern = "^Data Engineer$"))
-
-n_eng_south
-
-n_sci_north =  length(str_subset(North_sub_st$Position, pattern = "^Data Scientist"))+length(str_subset(North_sub_st$Position, pattern = "Data Scientist$")) - length(str_subset(North_sub_st$Position, pattern = "^Data Scientist$"))
-
-n_sci_north
-
-n_sci_south = length(str_subset(South_sub_st$Position, pattern = "^Data Scientist"))+length(str_subset(South_sub_st$Position, pattern = "Data Scientist$")) - length(str_subset(South_sub_st$Position, pattern = "^Data Scientist$"))
-
-n_sci_south
-```
-
-
-Comparing between numbers of data engineers and data scientists in the North and the South of California (using side-by-side histogram):
-
-```{r}
-P_data_fr = data.frame(Region = c("North","South","North","South"),
-  Number = c(n_eng_north,n_eng_south,n_sci_north,n_sci_south),
-  Factor = rep(c("Data Engineer","Data Scientist"),each = 2)
-)
-
-Plot_1 = ggplot(data = P_data_fr, aes(x = Factor, y = Number, fill = Region)) + 
-    geom_bar(stat = "identity", position=position_dodge()) +  
-    geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
-
-#jpeg('plotsecond.jpg')
-#plot(plotsecond)
-Plot_1
 ```
 
 
