@@ -276,7 +276,6 @@ count_order = function(col1, col2, order, top){
 
 
 Plot a histogram to see the prefer language for both prefer language 1 and prefer language 2
-
 Dataframe for counting Language:
 
 ```{r}
@@ -360,8 +359,6 @@ plotforth
 
 ```
 
-Plot a histogram to see the prefer major for both prefer major 1 and prefer major 2
-Dataframe for counting Major:
 
 3 - Write function to find out suitable companies: "find_company" that has 4 agrument. Minimum standing, experience, region, best language. It will return the dataframe that has all the company that fit our agruments
 
@@ -429,7 +426,15 @@ rbind(r1,r2)
 find_company("Medium", 5, "South CA","R")
 ```
 
-4 - Linear regression model to find our salary and check if it fit.
+4- Comparing between Data Scientist and Data Engineer.
+Base on jdata.
+- Number of Data Scientist vs number of Data Engineer 
+- Top 3 language for Data Scientist vs Data Engineer 
+- Best est_min_avg salary for each
+- City that offer the most Data Scientist position vs Data Engineer.
+
+
+5 - Linear regression model to find our salary and check if it fit.
 
 Data transformation:
 Minimum experience
