@@ -474,10 +474,123 @@ Plot_1 = ggplot(data = P_data_fr, aes(x = Factor, y = Number, fill = Region)) +
     geom_bar(stat = "identity", position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-#jpeg('plotsecond.jpg')
-#plot(plotsecond)
+#jpeg('Plot_1.jpg')
+#plot(Plot_1)
 Plot_1
 ```
+
+
+Top 3 language for Data Scientist vs Data Engineer 
+
+Set up 2 subsets for Data Scientist and Engineer in California State:
+
+```{r}
+Standing_sub = jdata[which(jdata$Standing != "NA"),]
+Eng_sub = Standing_sub[which(Standing_sub$Position == "Data Engineer"),]
+Sci_sub = Standing_sub[which(Standing_sub$Position == "Data Scientist"),]
+```
+
+Number of top 3 most used lanuage (Python, R, SQL) in Data Engineer vs Data Scientist position:
+
+```{r}
+n_Python_Eng = length(str_subset(Eng_sub$Preferred_lang1, pattern = "Python"))+length(str_subset(Eng_sub$Preferred_lang2, pattern = "Python"))
+
+n_Python_Eng
+
+n_Python_Sci = length(str_subset(Sci_sub$Preferred_lang1, pattern = "Python"))+length(str_subset(Sci_sub$Preferred_lang2, pattern = "Python"))
+
+n_Python_Sci
+
+n_R_Eng = length(str_subset(Eng_sub$Preferred_lang1, pattern = "R"))+length(str_subset(Eng_sub$Preferred_lang2, pattern = "R"))
+
+n_R_Eng
+
+n_R_Sci = length(str_subset(Sci_sub$Preferred_lang1, pattern = "R"))+length(str_subset(Sci_sub$Preferred_lang2, pattern = "R"))
+
+n_R_Sci
+
+n_SQL_Eng = length(str_subset(Eng_sub$Preferred_lang1, pattern = "SQL"))+length(str_subset(Eng_sub$Preferred_lang2, pattern = "SQL"))
+
+n_SQL_Eng
+
+n_SQL_Sci = length(str_subset(Sci_sub$Preferred_lang1, pattern = "SQL"))+length(str_subset(Sci_sub$Preferred_lang2, pattern = "SQL"))
+
+n_SQL_Sci
+```
+
+Comparing between number of Python, R, SQL in the position of Data Scientist and Data Engineer in California (using side-by-side histogram):                 
+
+```{r}
+Lang_data_fr = data.frame( Factor =c("Python","R","SQL"),
+      Position = rep(c("Data Scientist", "Data Engineer"),each = 3),
+      Number =  c(n_Python_Sci,n_R_Sci,n_SQL_Sci,n_Python_Eng,n_R_Eng,n_SQL_Eng))
+
+Plot_position = ggplot(data = Lang_data_fr, aes(x = Factor, y = Number, fill = Position)) + 
+    geom_bar(stat = "identity", position=position_dodge()) +  
+    geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
+
+#jpeg('Plot_position.jpg')
+#plot(Plot_position)
+Plot_position
+
+```
+
+Best estimated minimum salary for Data scientist and Data Engineer
+
+Average Salary
+```{r}
+#Use NA.omit to omit to take out NA values then use mean function to find average Salary 
+
+Omit_yr_salary_N = na.omit(Eng_sub$Est_min_avg_salary)
+Omit_yr_salary_S = na.omit(Sci_sub$Est_min_avg_salary)
+Eng_Est_min_salary = round(mean(Omit_yr_salary_N)/1000,2)
+Sci_Est_min_salary = round(mean(Omit_yr_salary_S)/1000,2)
+
+Eng_Est_min_salary
+Sci_Est_min_salary
+```
+
+Comparing between estimated minimum yearly salary (in thousands) for Data scientist and Data Engineer in California (using side-by-side histogram): 
+
+```{r}
+sala_data_frame = data.frame(
+  Position = rep(c("Data Scientist", "Data Engineer"),each = 1),
+  Number = c(Sci_Est_min_salary,Eng_Est_min_salary),
+  Factor = c("Data Scientist Salary","Data Engineer Salary"))
+            
+Plot_Salary = ggplot(data = sala_data_frame, aes(x = Factor, y = Number, fill = Position)) + 
+    geom_bar(stat = "identity", position=position_dodge()) +  
+    geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
+
+#jpeg('Plot_Salary.jpg')
+#plot(Plot_Salary)
+Plot_Salary
+                             
+```
+
+```{r}
+intersect(Sci_sub$City,Eng_sub$City)
+count(Sci_sub$City)
+count(Eng_sub$City)
+```
+
+```{r}
+City_Eng = c("San Francisco","Santa Monica","Los Angeles")
+City_Sci =c("San Francisco","Santa Monica","Los Angeles")
+
+n_San_Eng = length(str_subset(Eng_sub$City, pattern = "San Francisco"))
+
+```
+
+```{r}
+City_Data_fr = data.frame (City = rep(c("San Francisco","Santa Monica","Los Angeles"),each = 3),
+                    Factor = c("Data Scienist","Data Engineer"),
+                    Number = c()
+                    
+                    
+                    
+```
+
 
 5 - Linear regression model to find our salary and check if it fit.
 
