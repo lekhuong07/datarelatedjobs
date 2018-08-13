@@ -376,8 +376,8 @@ combinedf = data.frame(
 plotcombine = ggplot(data = combinedf, aes(x = Factor, y = Number, fill = Region)) + 
     geom_bar(stat = "identity", position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
-#jpeg('plotcombine.jpg')
-#plot(plotcombine)
+jpeg('plotcombine.jpg')
+plot(plotcombine)
 plotcombine
 ```
 
