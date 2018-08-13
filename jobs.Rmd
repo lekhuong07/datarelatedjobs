@@ -568,27 +568,60 @@ Plot_Salary
                              
 ```
 
+Finding the top 3 cities that have both most number of data Engineers and data Scientists:
+
 ```{r}
 intersect(Sci_sub$City,Eng_sub$City)
 count(Sci_sub$City)
 count(Eng_sub$City)
+
+City_Eng_Sci = c("San Francisco","Santa Monica","Los Angeles")
 ```
 
-```{r}
-City_Eng = c("San Francisco","Santa Monica","Los Angeles")
-City_Sci =c("San Francisco","Santa Monica","Los Angeles")
+Number of Data Engineer and Data Scientist in San Francisco, Santa Monica and Los Angeles of California:
 
-n_San_Eng = length(str_subset(Eng_sub$City, pattern = "San Francisco"))
+```{r}
+n_Eng_San = length(str_subset(Eng_sub$City, pattern = "San Francisco"))
+
+n_Eng_San
+
+n_Sci_San = length(str_subset(Sci_sub$City, pattern = "San Francisco"))
+
+n_Sci_San
+
+n_Eng_Mon = length(str_subset(Eng_sub$City, pattern = "Santa Monica"))
+
+n_Eng_Mon
+
+n_Sci_Mon = length(str_subset(Sci_sub$City, pattern = "Santa Monica"))
+
+n_Sci_Mon
+
+n_Eng_Los = length(str_subset(Eng_sub$City, pattern = "Los Angeles"))
+
+n_Eng_Los
+
+n_Sci_Los = length(str_subset(Sci_sub$City, pattern = "Los Angeles"))
+
+n_Sci_Los
 
 ```
 
+Comparing number of Data Engineer and Data Scientist in San Francisco, Santa Monica and Los Angeles of California:(using side-by-side histogram): 
+
 ```{r}
-City_Data_fr = data.frame (City = rep(c("San Francisco","Santa Monica","Los Angeles"),each = 3),
-                    Factor = c("Data Scienist","Data Engineer"),
-                    Number = c()
-                    
-                    
-                    
+City_Data_fr = data.frame (City = rep(c("San Francisco","Santa Monica","Los Angeles"),each = 2),
+                    Factor = c("Data Scientist","Data Engineer"),
+                    Number = c(n_Sci_San,n_Eng_San,n_Sci_Mon,n_Eng_Mon,n_Sci_Los,n_Eng_Los))
+
+Plot_3 = ggplot(data = City_Data_fr, aes(x = Factor, y = Number, fill = City)) + 
+    geom_bar(stat = "identity", position=position_dodge()) +  
+    geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
+
+#jpeg('Plot_3.jpg')
+#plot(Plot_3)
+Plot_3
+                
 ```
 
 
