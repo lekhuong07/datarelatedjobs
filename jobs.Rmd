@@ -72,6 +72,7 @@ tCitydf = data.frame(City_Name =  c("S.Francisco" , "L.Angeles" , "S.Jose" , "M.
 city_plot = ggplot(data = tCitydf, aes(x = City_Name, y = NumberofPosition)) + 
     geom_bar(stat = "identity", position=position_dodge()) 
 city_plot
+
 ```
 
 Set up 2 subsets for North and South:
@@ -208,6 +209,8 @@ plotsecond = ggplot(data = secondtdf, aes(x = Factor, y = Number, fill = Region)
 #plot(plotsecond)
 plotsecond
 ```
+
+
 
 This graph shows the frequency of each factors in the standing variable of jdata set. Each factor is subsetted by region, which is north vs south in California state. The indepedent variables are bachelor degree, master degree and Ph.D, and the dependent variables is the frequency of the indepedent variables. The numbers on top of each bar indicates the frequency of that factor. The color indicates region difference.
 
@@ -604,6 +607,36 @@ Find interactions between Region_Logic and the bonuses.
 reg_interaction = glm(Region_Logic ~ Est_min_avg_salary + City_Bonus + Posi_Bonus + Exp_Bonus + Est_min_avg_salary:City_Bonus, family = binomial, data = jdata)
 summary(reg_interaction) 
 ```
+
+Comparing between numbers of data engineers and data scientists in the North and the South of California (using side-by-side histogram):
+
+```{r}
+major = count(jdata$Position)
+
+count(North_sub_st$Position)
+
+n_eng_north = length(str_subset(North_sub_st$Position, pattern = "^Data Engineer"))+length(str_subset(North_sub_st$Position, pattern = "Data Engineer$")) - length(str_subset(North_sub_st$Position, pattern = "^Data Engineer$"))
+
+n_eng_south = length(str_subset(South_sub_st$Position, pattern = "^Data Engineer"))+length(str_subset(South_sub_st$Position, pattern = "Data Engineer$")) - length(str_subset(South_sub_st$Position, pattern = "^Data Engineer$"))
+
+n_sci_north =  length(str_subset(North_sub_st$Position, pattern = "^Data Scientist"))+length(str_subset(North_sub_st$Position, pattern = "Data Scientist$")) - length(str_subset(North_sub_st$Position, pattern = "^Data Scientist$"))
+
+n_sci_south = length(str_subset(South_sub_st$Position, pattern = "^Data Scientist"))+length(str_subset(South_sub_st$Position, pattern = "Data Scientist$")) - length(str_subset(South_sub_st$Position, pattern = "^Data Scientist$"))
+
+P_data_fr = data.frame(Region = c("North","South","North","South"),
+  Number = c(n_eng_north,n_eng_south,n_sci_north,n_sci_south),
+  Factor = rep(c("Data Engineer","Data Scientist"),each = 2)
+)
+
+Plot_1 = ggplot(data = P_data_fr, aes(x = Factor, y = Number, fill = Region)) + 
+    geom_bar(stat = "identity", position=position_dodge()) +  
+    geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
+
+#jpeg('plotsecond.jpg')
+#plot(plotsecond)
+Plot_1
+```
+
 
 Conclusion:
 
