@@ -546,9 +546,6 @@ n_SQL_Sci
 Comparing between number of Python, R, SQL in the position of Data Scientist and Data Engineer in California (using side-by-side histogram):                 
 
 ```{r}
-count_order(Eng_sub$Preferred_lang1, Eng_sub$Preferred_lang2, "decreasing", 10)
-count_order(Sci_sub$Preferred_lang1, Sci_sub$Preferred_lang2, "decreasing", 10)
-
 Lang_data_fr = data.frame( Factor =c("Python","R","SQL"),
       Position = rep(c("Data Scientist", "Data Engineer"),each = 3),
       Number =  c(n_Python_Sci,n_R_Sci,n_SQL_Sci,n_Python_Eng,n_R_Eng,n_SQL_Eng))
@@ -564,6 +561,8 @@ Plot_position
 ```
 
 This histogram shows the number of top 3 most used language in the position of data scientist and data engineer. The histogram is subsetted by postion of data scientist and data engineer, and the number on top of each bars represents the frequency of different indepedent variables.  
+
+
 
 Best estimated minimum salary for Data scientist and Data Engineer
 
@@ -604,8 +603,9 @@ Finding the top 3 cities that have both most number of data Engineers and data S
 
 ```{r}
 intersect(Sci_sub$City,Eng_sub$City)
-count(Sci_sub$City)
-count(Eng_sub$City)
+
+count(Eng_sub$City)[order(count(Eng_sub$City)$freq, decreasing = T),]
+count(Sci_sub$City)[order(count(Sci_sub$City)$freq, decreasing = T),]
 
 City_Eng_Sci = c("San Francisco","Santa Monica","Los Angeles")
 ```
@@ -631,18 +631,37 @@ n_Sci_Los
 Comparing number of Data Engineer and Data Scientist in San Francisco, Santa Monica and Los Angeles of California:(using side-by-side histogram): 
 
 ```{r}
-City_Data_fr = data.frame (City = rep(c("San Francisco","Santa Monica","Los Angeles"),each = 2),
+City_Data_fr = data.frame (City = rep(c("Average salary", "Jobs in North", "Joobs in South"),2),
                     Factor = c("Data Scientist","Data Engineer"),
-                    Number = c(n_Sci_San,n_Eng_San,n_Sci_Mon,n_Eng_Mon,n_Sci_Los,n_Eng_Los))
+                    Number = c(Eng_Est_min_salary, n_eng_north, n_eng_south, Sci_Est_min_salary,n_sci_north, n_sci_south))
 
 Plot_3 = ggplot(data = City_Data_fr, aes(x = Factor, y = Number, fill = City)) + 
-    geom_bar(stat = "identity", position=position_dodge()) +  
-    geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
+    geom_bar(stat = "identity", position=position_dodge())   
+    #geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-#jpeg('Plot_3.jpg')
-#plot(Plot_3)
+jpeg('Plot_3.jpg')
+plot(Plot_3)
 Plot_3
                 
+```
+
+Combine everything
+
+```{r}
+lang_sci = count_order(Sci_sub$Preferred_lang1, Sci_sub$Preferred_lang2, "decreasing", 5)
+lang_eng = count_order(Eng_sub$Preferred_lang1, Eng_sub$Preferred_lang2, "decreasing", 5)
+
+
+lang_sci
+lang_eng
+data = data.frame(Language      = rep(c("Data Engineer", "Data Scientist"),5), 
+                   Name_Language = rep(c("E_SQL  |  S_Python", "E_Python  |  S_R","E_Java  |  S_SQL", "E_NoSQL  |  S_Java","E_AWS  |  S_C/C++"),2),
+                   Value         = c(lang_eng$Freq1[1], lang_sci$Freq1[1], lang_eng$Freq1[2], lang_sci$Freq1[2], 
+                                     lang_eng$Freq1[3], lang_sci$Freq1[3], lang_eng$Freq1[4], lang_sci$Freq1[4], lang_eng$Freq1[5], lang_sci$Freq1[5]))
+ggplot(data, aes(fill = Name_Language, y = Value, x = Language)) +
+       geom_bar( stat="identity", position = "fill")
+
+
 ```
 
 This histogram shows the comparison of number of Data Engineer and Data Scientist in San Francisco, Santa Monica and Los Angeles of California. In here, we subsetted the histogram by City of San Francisco,Santa Monica and Los Angeles and
