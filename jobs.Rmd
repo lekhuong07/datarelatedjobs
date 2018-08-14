@@ -636,14 +636,16 @@ lang_eng = count_order(Eng_sub$Preferred_lang1, Eng_sub$Preferred_lang2, "decrea
 
 lang_sci
 lang_eng
-data = data.frame(Language      = rep(c("Data Engineer", "Data Scientist"),5), 
-                   Name_Language = rep(c("E_SQL  |  S_Python", "E_Python  |  S_R","E_Java  |  S_SQL", "E_NoSQL  |  S_Java","E_AWS  |  S_C/C++"),2),
+data = data.frame(Language       = rep(c("Data Engineer", "Data Scientist"),5), 
+                   Name_Language = c("E_SQL","S_Python","E_Python","S_R","E_Java","S_SQL","E_NoSQL","S_Java","E_AWS", "S_C/C++"),
                    Value         = c(lang_eng$Freq1[1], lang_sci$Freq1[1], lang_eng$Freq1[2], lang_sci$Freq1[2], 
                                      lang_eng$Freq1[3], lang_sci$Freq1[3], lang_eng$Freq1[4], lang_sci$Freq1[4], lang_eng$Freq1[5], lang_sci$Freq1[5]))
-ggplot(data, aes(fill = Name_Language, y = Value, x = Language)) +
-       geom_bar( stat="identity", position = "fill")
+Language_plot = ggplot(data, aes(fill = Name_Language, y = Value, x = Language)) +
+       geom_bar( stat="identity", position = "fill")  
 
-
+jpeg('Language_plot.jpg')
+plot(Language_plot)
+Language_plot
 ```
 
 This histogram shows the comparison of number of Data Engineer and Data Scientist in San Francisco, Santa Monica and Los Angeles of California. In here, we subsetted the histogram by City of San Francisco,Santa Monica and Los Angeles and
