@@ -585,15 +585,12 @@ Finding the top 3 cities that have both most number of data Engineers and data S
 
 ```{r}
 intersect(Sci_sub$City,Eng_sub$City)
-<<<<<<< HEAD
 
 count(Eng_sub$City)[order(count(Eng_sub$City)$freq, decreasing = T),]
 count(Sci_sub$City)[order(count(Sci_sub$City)$freq, decreasing = T),]
 
-=======
 count(Sci_sub$City)
 count(Eng_sub$City)
->>>>>>> 129e2ae884f432cb8aaf4e37da0b29ee7bde3807
 City_Eng_Sci = c("San Francisco","Santa Monica","Los Angeles")
 ```
 
@@ -622,11 +619,11 @@ City_Data_fr = data.frame (City = rep(c("Average salary", "Jobs in North", "Joob
                     Number = c(Eng_Est_min_salary, n_eng_north, n_eng_south, Sci_Est_min_salary,n_sci_north, n_sci_south))
 
 Plot_3 = ggplot(data = City_Data_fr, aes(x = Factor, y = Number, fill = City)) + 
-    geom_bar(stat = "identity", position=position_dodge())   
-    #geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
+    geom_bar(stat = "identity", position=position_dodge())   +
+    geom_text(aes(label = Number), position = position_dodge(0.95), vjust= 1.5, color = "darkred", size = 3)
 
-jpeg('Plot_3.jpg')
-plot(Plot_3)
+#jpeg('Plot_3.jpg')
+#plot(Plot_3)
 Plot_3
 ```
 
