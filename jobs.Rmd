@@ -6,9 +6,9 @@ date: July 23, 2018
 
 Introduction: In this project, we performed data analysis using R language on job demand across data related field to help people better understand the basic requirement and information on data - related jobs in California State. 
 
-We used excel to create the data set that will later be imported in r markdown file for the analysis. Moreover, we targetted job demanding social networkoing sites such as glassdoor, Indeed and Linkedin to help creating the variables for our data set. 
+First of all, we used excel to create the data set that will later be imported in r markdown file for the analysis.Then, we targetted job demanding social networking sites such as glassdoor, Indeed and Linkedin to help creating the variables for our data set. 
 
-During the analysis, the graphs are created for visualization and  functions are created for searching. The github is used to help creating a collaborative repository to store the work files that are created in R markdown.
+During the analysis, the graphs are created for visualization and functions are created for searching. The github is used to help creating a collaborative repository to store the work files that are created in R markdown.
 
 
 Load different packages that will use in this model:
@@ -155,7 +155,6 @@ plotfirst = ggplot(data = firstdf, aes(x = Factor, y = Number, fill = Region)) +
 # jpeg('plotfirst.jpg')
 # plot(plotfirst)
 plotfirst
-
 ```
 
 2. Comparing between companies in the North and the South of California (using side-by-side histogram):
@@ -281,7 +280,6 @@ count_order = function(col1, col2, order, top){
   }
   return(res[1:top,1:2])
 }
-
 ```
 
 
@@ -365,8 +363,6 @@ plotforth = ggplot(data = forthdf, aes(x = Factor, y = Number, fill = Region)) +
 # jpeg('plotforth.jpg')
 # plot(plotforth)
 plotforth
-
-
 ```
 
 Combining 1 and 2 together:
@@ -425,7 +421,6 @@ find_company = function(Difficulty, Exp, Region,Language){
   return(union(intersect(intersect(Argu_x,Argu_y),intersect(Argu_z,Argu_u1)),intersect(intersect(Argu_x,Argu_y),intersect(Argu_z,Argu_u2))))
 
 }
-
 find_company("Medium", 5, "South CA","R")
 ```
 
@@ -466,19 +461,15 @@ major = count(jdata$Position)
 count(North_sub_st$Position)
 
 n_eng_north = length(str_subset(North_sub_st$Position, pattern = "^Data Engineer"))+length(str_subset(North_sub_st$Position, pattern = "Data Engineer$")) - length(str_subset(North_sub_st$Position, pattern = "^Data Engineer$"))
-
 n_eng_north
 
 n_eng_south = length(str_subset(South_sub_st$Position, pattern = "^Data Engineer"))+length(str_subset(South_sub_st$Position, pattern = "Data Engineer$")) - length(str_subset(South_sub_st$Position, pattern = "^Data Engineer$"))
-
 n_eng_south
 
 n_sci_north =  length(str_subset(North_sub_st$Position, pattern = "^Data Scientist"))+length(str_subset(North_sub_st$Position, pattern = "Data Scientist$")) - length(str_subset(North_sub_st$Position, pattern = "^Data Scientist$"))
-
 n_sci_north
 
 n_sci_south = length(str_subset(South_sub_st$Position, pattern = "^Data Scientist"))+length(str_subset(South_sub_st$Position, pattern = "Data Scientist$")) - length(str_subset(South_sub_st$Position, pattern = "^Data Scientist$"))
-
 n_sci_south
 ```
 
@@ -512,34 +503,27 @@ Eng_sub = Standing_sub[which(Standing_sub$Position == "Data Engineer"),]
 Sci_sub = Standing_sub[which(Standing_sub$Position == "Data Scientist"),]
 count(Eng_sub$Preferred_lang1)
 count(Eng_sub$Preferred_lang2)
-
 ```
 
 Number of top 3 most used lanuage (Python, R, SQL) in Data Engineer vs Data Scientist position:
 
 ```{r}
 n_Python_Eng = length(str_subset(Eng_sub$Preferred_lang1, pattern = "Python"))+length(str_subset(Eng_sub$Preferred_lang2, pattern = "Python"))
-
 n_Python_Eng
 
 n_Python_Sci = length(str_subset(Sci_sub$Preferred_lang1, pattern = "Python"))+length(str_subset(Sci_sub$Preferred_lang2, pattern = "Python"))
-
 n_Python_Sci
 
 n_R_Eng = length(str_subset(Eng_sub$Preferred_lang1, pattern = "R"))+length(str_subset(Eng_sub$Preferred_lang2, pattern = "R"))
-
 n_R_Eng
 
 n_R_Sci = length(str_subset(Sci_sub$Preferred_lang1, pattern = "R"))+length(str_subset(Sci_sub$Preferred_lang2, pattern = "R"))
-
 n_R_Sci
 
 n_SQL_Eng = length(str_subset(Eng_sub$Preferred_lang1, pattern = "SQL"))+length(str_subset(Eng_sub$Preferred_lang2, pattern = "SQL"))
-
 n_SQL_Eng
 
 n_SQL_Sci = length(str_subset(Sci_sub$Preferred_lang1, pattern = "SQL"))+length(str_subset(Sci_sub$Preferred_lang2, pattern = "SQL"))
-
 n_SQL_Sci
 ```
 
@@ -557,7 +541,6 @@ Plot_position = ggplot(data = Lang_data_fr, aes(x = Factor, y = Number, fill = P
 #jpeg('Plot_position.jpg')
 #plot(Plot_position)
 Plot_position
-
 ```
 
 This histogram shows the number of top 3 most used language in the position of data scientist and data engineer. The histogram is subsetted by postion of data scientist and data engineer, and the number on top of each bars represents the frequency of different indepedent variables.  
@@ -594,7 +577,6 @@ Plot_Salary = ggplot(data = sala_data_frame, aes(x = Factor, y = Number, fill = 
 #jpeg('Plot_Salary.jpg')
 #plot(Plot_Salary)
 Plot_Salary
-                             
 ```
 
 This histogram shows the comparison between estimated minimum yearly salary (in thousands) for Data scientist and Data Engineer in California. We subsetted the histogram by postion of data scientist and data engineer in the data set.The number on top of each bars represents the frequency of different independent variables. 
@@ -603,10 +585,15 @@ Finding the top 3 cities that have both most number of data Engineers and data S
 
 ```{r}
 intersect(Sci_sub$City,Eng_sub$City)
+<<<<<<< HEAD
 
 count(Eng_sub$City)[order(count(Eng_sub$City)$freq, decreasing = T),]
 count(Sci_sub$City)[order(count(Sci_sub$City)$freq, decreasing = T),]
 
+=======
+count(Sci_sub$City)
+count(Eng_sub$City)
+>>>>>>> 129e2ae884f432cb8aaf4e37da0b29ee7bde3807
 City_Eng_Sci = c("San Francisco","Santa Monica","Los Angeles")
 ```
 
@@ -625,7 +612,6 @@ n_Eng_Los = length(str_subset(Eng_sub$City, pattern = "Los Angeles"))
 n_Eng_Los
 n_Sci_Los = length(str_subset(Sci_sub$City, pattern = "Los Angeles"))
 n_Sci_Los
-
 ```
 
 Comparing number of Data Engineer and Data Scientist in San Francisco, Santa Monica and Los Angeles of California:(using side-by-side histogram): 
@@ -642,7 +628,6 @@ Plot_3 = ggplot(data = City_Data_fr, aes(x = Factor, y = Number, fill = City)) +
 jpeg('Plot_3.jpg')
 plot(Plot_3)
 Plot_3
-                
 ```
 
 Combine everything
@@ -723,7 +708,6 @@ for (i in 1:length(jdata$Position)){
     jdata$Posi_Bonus[i] = round(rnorm(1, mean = 10000, sd = 1000),1)
   }
 }
-
 ```
 
 Finding bonuses for with the year of experience:
@@ -751,7 +735,6 @@ for (i in 1:length(jdata$Min_exp)){
   }
 }
 head(jdata,50)
-
 ```
 
 Original model:
@@ -786,7 +769,6 @@ Using backward aic to find out the selected model:
 full_model = lm(Est_min_avg_salary ~ Min_exp + Exp_Bonus + City_Bonus + Posi_Bonus, data = jdata)
 sele_model = step(full_model, direction = "backward", trace = 0)
 sele_model
-
 ```
 
 From the select model, it looks like City Bonus is not really great for the model.
@@ -795,7 +777,6 @@ From the select model, it looks like City Bonus is not really great for the mode
 for(i in 1:length(jdata$Est_min_avg_salary)){
   jdata$New_min_avg_salary[i] = jdata$City_Bonus[i] + jdata$Posi_Bonus[i] + jdata$Exp_Bonus[i]
 }
-
 ```
 
 Compare new salary and estimate one.
@@ -820,7 +801,6 @@ for(i in 1:length(jdata$Region)){
   }
 }
 head(jdata,50)
-
 ```
 
 The model:
@@ -838,16 +818,9 @@ reg_interaction = glm(Region_Logic ~ Est_min_avg_salary + City_Bonus + Posi_Bonu
 summary(reg_interaction) 
 ```
 
-
 Conclusion:
 
 By completing this project, we are able to understand more in depth about the basic requirements and information about data - related job in the state of California, in that we are able to create  graphs to visualize the behavior of different variables from the data set and write out functions to help obtaining the outputs that would match the conditional inputs.  
 
 
-
-Body: Talk about all of the graphs we have.
-- What's the graph about.
-- Why do we make this graph
-- Interesting number, reasons?
-Talk about those functions we made
 
