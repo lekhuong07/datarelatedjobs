@@ -129,6 +129,12 @@ Omit_yr_salary_S = na.omit(South_sub$Est_min_avg_salary)
 North_Est_min_salary = round(mean(Omit_yr_salary_N)/1000,2)
 South_Est_min_salary = round(mean(Omit_yr_salary_S)/1000,2)
 
+max(Omit_yr_salary_N)
+min(Omit_yr_salary_N)
+
+max(Omit_yr_salary_S)
+min(Omit_yr_salary_S)
+
 North_Est_min_salary
 South_Est_min_salary
 ```
