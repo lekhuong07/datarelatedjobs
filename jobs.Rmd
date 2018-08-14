@@ -152,8 +152,8 @@ plotfirst = ggplot(data = firstdf, aes(x = Factor, y = Number, fill = Region)) +
     geom_bar(stat = "identity", position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-jpeg('plotfirst.jpg')
-plot(plotfirst)
+# jpeg('plotfirst.jpg')
+# plot(plotfirst)
 plotfirst
 
 ```
@@ -213,8 +213,8 @@ plotsecond = ggplot(data = secondtdf, aes(x = Factor, y = Number, fill = Region)
     geom_bar(stat = "identity", position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-jpeg('plotsecond.jpg')
-plot(plotsecond)
+# jpeg('plotsecond.jpg')
+# plot(plotsecond)
 plotsecond
 ```
 
@@ -267,8 +267,8 @@ count_order = function(col1, col2, order, top){
                             Freq2 = c(ct2_dec$freq,rep(NA,cl))) 
     }
   }
-  for(i in 1:15){
-    for(j in 1:15){
+  for(i in 1:10){
+    for(j in 1:10){
       if(fresult$Lang1[i] == fresult$Lang2[j]){
         fresult$Freq1[i] = fresult$Freq1[i] + fresult$Freq2[j]
       }
@@ -303,8 +303,8 @@ plotthird = ggplot(data = thirddf, aes(x = Factor, y = Number, fill = Region)) +
     geom_bar(stat = "identity", position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-jpeg('plotthird.jpg')
-plot(plotthird)
+# jpeg('plotthird.jpg')
+# plot(plotthird)
 plotthird
 ```
 
@@ -362,8 +362,8 @@ plotforth = ggplot(data = forthdf, aes(x = Factor, y = Number, fill = Region)) +
     geom_bar(stat = "identity", position=position_dodge()) +  
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust=0.5, color = "darkred", size = 3)
 
-jpeg('plotforth.jpg')
-plot(plotforth)
+# jpeg('plotforth.jpg')
+# plot(plotforth)
 plotforth
 
 
@@ -510,6 +510,9 @@ Set up 2 subsets for Data Scientist and Engineer in California State:
 Standing_sub = jdata[which(jdata$Standing != "NA"),]
 Eng_sub = Standing_sub[which(Standing_sub$Position == "Data Engineer"),]
 Sci_sub = Standing_sub[which(Standing_sub$Position == "Data Scientist"),]
+count(Eng_sub$Preferred_lang1)
+count(Eng_sub$Preferred_lang2)
+
 ```
 
 Number of top 3 most used lanuage (Python, R, SQL) in Data Engineer vs Data Scientist position:
@@ -543,6 +546,9 @@ n_SQL_Sci
 Comparing between number of Python, R, SQL in the position of Data Scientist and Data Engineer in California (using side-by-side histogram):                 
 
 ```{r}
+count_order(Eng_sub$Preferred_lang1, Eng_sub$Preferred_lang2, "decreasing", 10)
+count_order(Sci_sub$Preferred_lang1, Sci_sub$Preferred_lang2, "decreasing", 10)
+
 Lang_data_fr = data.frame( Factor =c("Python","R","SQL"),
       Position = rep(c("Data Scientist", "Data Engineer"),each = 3),
       Number =  c(n_Python_Sci,n_R_Sci,n_SQL_Sci,n_Python_Eng,n_R_Eng,n_SQL_Eng))
@@ -608,27 +614,16 @@ Number of Data Engineer and Data Scientist in San Francisco, Santa Monica and Lo
 
 ```{r}
 n_Eng_San = length(str_subset(Eng_sub$City, pattern = "San Francisco"))
-
 n_Eng_San
-
 n_Sci_San = length(str_subset(Sci_sub$City, pattern = "San Francisco"))
-
 n_Sci_San
-
 n_Eng_Mon = length(str_subset(Eng_sub$City, pattern = "Santa Monica"))
-
 n_Eng_Mon
-
 n_Sci_Mon = length(str_subset(Sci_sub$City, pattern = "Santa Monica"))
-
 n_Sci_Mon
-
 n_Eng_Los = length(str_subset(Eng_sub$City, pattern = "Los Angeles"))
-
 n_Eng_Los
-
 n_Sci_Los = length(str_subset(Sci_sub$City, pattern = "Los Angeles"))
-
 n_Sci_Los
 
 ```
