@@ -622,8 +622,8 @@ Plot_3 = ggplot(data = City_Data_fr, aes(x = Factor, y = Number, fill = City)) +
     geom_bar(stat = "identity", position=position_dodge())   +
     geom_text(aes(label = Number), position = position_dodge(0.95), vjust= 1.5, color = "darkred", size = 3)
 
-#jpeg('Plot_3.jpg')
-#plot(Plot_3)
+jpeg('Plot_3.jpg')
+plot(Plot_3)
 Plot_3
 ```
 
