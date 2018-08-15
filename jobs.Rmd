@@ -14,7 +14,7 @@ During the analysis, the graphs are created for visualization and functions are 
 Load different packages that will use in this model:
 
 ```{r}
-pkg_list = c("ggplot2", "plyr", "stringr")
+pkg_list = c("ggplot2", "plyr", "stringr", "VennDiagram")
 mia_pkgs = pkg_list[!(pkg_list %in% installed.packages()[,"Package"])]
 if(length(mia_pkgs) > 0) install.packages(mia_pkgs)
 loaded_pkgs = lapply(pkg_list, require, character.only=TRUE)
@@ -72,8 +72,8 @@ tCitydf = data.frame(City_Name =  c("S.Francisco" , "L.Angeles" , "S.Jose" , "M.
 city_plotg = ggplot(data = tCitydf, aes(x = City_Name, y = NumberofPosition)) + 
     geom_bar(stat = "identity", position=position_dodge()) +
     geom_text(aes(label = NumberofPosition), position = position_dodge(0.95), vjust= 1.5, color = "white", size = 3)
-jpeg('city_plotg.jpg')
-plot(city_plotg)
+#jpeg('city_plotg.jpg')
+#plot(city_plotg)
 city_plotg
 ```
 
@@ -121,6 +121,26 @@ avg_exp_S
 ```
  
 Average salary:
+
+Top 10 cities:
+
+```{r}
+jdata_salary = jdata[which(jdata$Est_min_avg_salary != "NA"),]
+mean(jdata_salary$Est_min_avg_salary[which(jdata_salary$City == "San Francisco")])
+mean(jdata_salary$Est_min_avg_salary[which(jdata_salary$City == "Los Angeles")])
+mean(jdata_salary$Est_min_avg_salary[which(jdata_salary$City == "San Jose")])
+mean(jdata_salary$Est_min_avg_salary[which(jdata_salary$City == "Mountain View")])
+mean(jdata_salary$Est_min_avg_salary[which(jdata_salary$City == "San Diego")])
+mean(jdata_salary$Est_min_avg_salary[which(jdata_salary$City == "San Mateo")])
+mean(jdata_salary$Est_min_avg_salary[which(jdata_salary$City == "Palo Alto")])
+mean(jdata_salary$Est_min_avg_salary[which(jdata_salary$City == "Santa Monica")])
+mean(jdata_salary$Est_min_avg_salary[which(jdata_salary$City == "Sunnyvale")])
+mean(jdata_salary$Est_min_avg_salary[which(jdata_salary$City == "Redwood City")])
+
+```
+
+
+North vs South
 
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average
@@ -447,7 +467,7 @@ rbind(r1,r2)
 find_company("Medium", 5, "South CA","R")
 ```
 
-4- Comparing between Data Scientist and Data Engineer.
+4- Comparing between Data Scientist and Data Engineer and Data Analyst.
 Base on jdata.
 - Number of Data Scientist vs number of Data Engineer 
 - Top 3 language for Data Scientist vs Data Engineer 
@@ -501,8 +521,10 @@ Set up 2 subsets for Data Scientist and Engineer in California State:
 Standing_sub = jdata[which(jdata$Standing != "NA"),]
 Eng_sub = Standing_sub[which(Standing_sub$Position == "Data Engineer"),]
 Sci_sub = Standing_sub[which(Standing_sub$Position == "Data Scientist"),]
-count(Eng_sub$Preferred_lang1)
-count(Eng_sub$Preferred_lang2)
+Ana_sub = Standing_sub[which(Standing_sub$Position == "Data Analyst"),]
+nrow(Eng_sub)
+nrow(Sci_sub)
+nrow(Ana_sub)
 ```
 
 Number of top 3 most used lanuage (Python, R, SQL) in Data Engineer vs Data Scientist position:
@@ -549,6 +571,7 @@ This histogram shows the number of top 3 most used language in the position of d
 Best estimated minimum salary for data scientist and data Engineer
 
 Average Salary
+
 ```{r}
 #Use NA.omit to omit to take out NA values then use mean function to find average Salary 
 
@@ -583,14 +606,16 @@ This histogram shows the comparison between estimated minimum yearly salary (in 
 Finding the top 3 cities that have both most number of data Engineers and data Scientists:
 
 ```{r}
+
 intersect(Sci_sub$City,Eng_sub$City)
 
-count(Eng_sub$City)[order(count(Eng_sub$City)$freq, decreasing = T),]
-count(Sci_sub$City)[order(count(Sci_sub$City)$freq, decreasing = T),]
+# count(Eng_sub$City)[order(count(Eng_sub$City)$freq, decreasing = T),]
+# count(Sci_sub$City)[order(count(Sci_sub$City)$freq, decreasing = T),]
 
-count(Sci_sub$City)
-count(Eng_sub$City)
-City_Eng_Sci = c("San Francisco","Santa Monica","Los Angeles")
+count_order(Sci_sub$City, Sci_sub$City, "decreasing", 5)
+count_order(Eng_sub$City, Eng_sub$City, "decreasing", 5)
+count_order(Ana_sub$City, Ana_sub$City, "decreasing", 5)
+#Divide by 2 to get the actual number
 ```
 
 Number of Data Engineer and Data Scientist in San Francisco, Santa Monica and Los Angeles of California:
@@ -648,6 +673,56 @@ Language_plot
 ```
 
 
+```{r}
+make_conf_mat = function(first, second, third) {
+  table(predicted = predicted, actual = actual)
+}
+```
+
+Venn diagram to compare Data Analyst, Data Engineer, and Data Scientist.
+
+```{r}
+Ana_sub_sal = Ana_sub[which(Ana_sub$Est_min_avg_salary != "NA"),] 
+Eng_sub_sal = Eng_sub[which(Eng_sub$Est_min_avg_salary != "NA"),] 
+Sci_sub_sal = Sci_sub[which(Sci_sub$Est_min_avg_salary != "NA"),] 
+
+a_s = mean(Ana_sub_sal$Est_min_avg_salary)
+e_s = mean(Eng_sub_sal$Est_min_avg_salary) 
+s_s = mean(Sci_sub_sal$Est_min_avg_salary)
+
+
+ct_lang_ana = count_order(Ana_sub$Preferred_lang1, Ana_sub$Preferred_lang2, "decreasing", 5)
+ct_lang_eng = count_order(Eng_sub$Preferred_lang1, Eng_sub$Preferred_lang2, "decreasing", 5)
+ct_lang_sci = count_order(Sci_sub$Preferred_lang1, Sci_sub$Preferred_lang2, "decreasing", 5)
+
+# ct_lang_ana
+# ct_lang_eng
+# ct_lang_sci
+```
+
+Major mentioned.
+
+```{r}
+
+count_order(Ana_sub$Preferred_mj1[which(Ana_sub$Preferred_mj1 != "NA")], Ana_sub$Preferred_mj2[which(Ana_sub$Preferred_mj2 != "NA")], "decreasing", 5)
+count_order(Eng_sub$Preferred_mj1[which(Eng_sub$Preferred_mj1 != "NA")], Eng_sub$Preferred_mj2[which(Eng_sub$Preferred_mj2 != "NA")], "decreasing", 5)
+count_order(Sci_sub$Preferred_mj1[which(Sci_sub$Preferred_mj1 != "NA")], Sci_sub$Preferred_mj2[which(Sci_sub$Preferred_mj2 != "NA")], "decreasing", 5)
+
+```
+
+
+Standing and experience for the compare:
+
+```{r}
+count(Ana_sub$Standing)
+count(Eng_sub$Standing)
+count(Sci_sub$Standing)
+
+round(mean(Ana_sub$Min_exp) * 12,1)
+round(mean(Eng_sub$Min_exp) * 12,1)
+round(mean(Sci_sub$Min_exp) * 12,1)
+```
+
 5 - Linear regression model to find our salary and check if it fit.
 
 Data transformation:
@@ -683,7 +758,7 @@ if(count(jdata$City)$freq[which(count(jdata$City)$x == (jdata$City[i]))] > mean(
   jdata$City_Bonus[i] = round(rnorm(1, mean = result * 1.5, sd = 1500),1) 
 } else {
   jdata$Jobs_density[i] = "Low"
-  jdata$City_Bonus[i] = round(rnorm(1, mean = result * 1.45, sd = 1500),1) 
+  jdata$City_Bonus[i] = round(rnorm(1, mean = result * 1.4, sd = 1500),1) 
 }
 ```
 
@@ -730,7 +805,6 @@ for (i in 1:length(jdata$Min_exp)){
     jdata$Exp_Bonus[i] = round(exp_multiplier * jdata$Min_exp[i] /2 ,1) 
   }
 }
-head(jdata,50)
 ```
 
 Original model:
@@ -779,8 +853,8 @@ Compare new salary and estimate one.
 
 ```{r}
 model_compare = lm(Est_min_avg_salary ~ New_min_avg_salary, data = jdata)
-plot(jdata$Est_min_avg_salary, jdata$New_min_avg_salary)
-abline(model_compare)
+plot(jdata$Est_min_avg_salary, jdata$New_min_avg_salary, main = "Calculate salary vs Original salary",
+     xlab = "Original", ylab = "Calculated")
 ```
 
 It looks like the from the model, the abline is not following what the data has. 
@@ -796,7 +870,6 @@ for(i in 1:length(jdata$Region)){
     jdata$Region_Logic[i] = 0
   }
 }
-head(jdata,50)
 ```
 
 The model:
