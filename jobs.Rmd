@@ -546,8 +546,7 @@ Plot_position
 This histogram shows the number of top 3 most used language in the position of data scientist and data engineer. The histogram is subsetted by postion of data scientist and data engineer, and the number on top of each bars represents the frequency of different indepedent variables.  
 
 
-
-Best estimated minimum salary for Data scientist and Data Engineer
+Best estimated minimum salary for data scientist and data Engineer
 
 Average Salary
 ```{r}
@@ -611,7 +610,7 @@ n_Sci_Los = length(str_subset(Sci_sub$City, pattern = "Los Angeles"))
 n_Sci_Los
 ```
 
-Comparing number of Data Engineer and Data Scientist in San Francisco, Santa Monica and Los Angeles of California:(using side-by-side histogram): 
+Comparing number of data Engineer and data Scientist in north vs south of California as well as their salary:(using side-by-side histogram): 
 
 ```{r}
 City_Data_fr = data.frame (City = rep(c("Average salary", "Jobs in North", "Joobs in South"),2),
@@ -648,8 +647,6 @@ plot(Language_plot)
 Language_plot
 ```
 
-This histogram shows the comparison of number of Data Engineer and Data Scientist in San Francisco, Santa Monica and Los Angeles of California. In here, we subsetted the histogram by City of San Francisco,Santa Monica and Los Angeles and
-made data engineer and data scientist as two of the independent variables.The number on top of each bars represents the frequency of different indepedent variables. 
 
 5 - Linear regression model to find our salary and check if it fit.
 
